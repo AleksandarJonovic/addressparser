@@ -17,7 +17,7 @@ public class Addressparser {
         
         Parser ps = new Parser();
         
-        String[] test = ps.parseThis("Brøndby Nord Vej i København S");
+        String[] test = ps.parseThis("mariavej 23b 2300 maria er awesome by");
         
         System.out.println("Printing the results 1");
         for(int i = 0; i < test.length ; i++){

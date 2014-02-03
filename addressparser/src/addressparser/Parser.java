@@ -41,9 +41,9 @@ public class Parser {
 
                 String matchedString = parseMe.substring(matcher.start(), matcher.end());
 
-                result[i] = matchedString.replace(",", "").trim();
+                result[i] = matchedString.replaceFirst(",", "").trim();
 
-                parseMe = parseMe.replace(matchedString, "").trim();
+                parseMe = parseMe.replaceFirst(matchedString, "").trim();
                 System.out.println(parseMe);
                 break;
             }
