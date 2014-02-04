@@ -17,11 +17,11 @@ public class Addressparser {
         
         Parser ps = new Parser();
         
-        String[] test = ps.parseThis("Brøndby Nord Vej 234 4sal 2300 København S");
+        String[] test = ps.parseThis("mariavej 23b 2300 maria er awesome by");
         
+        System.out.println("Printing the results 1");
         for(int i = 0; i < test.length ; i++){
             System.out.println(test[i]);
         }
-        
     }
 }

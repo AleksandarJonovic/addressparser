@@ -10,7 +10,7 @@ import java.util.regex.Matcher;
 public class Parser {
 
     String[] result = new String[6];
-    String[] expressions = new String[5];
+    String[] expressions = new String[6];
 
     public String[] parseThis(String parseMe)
     {
@@ -19,11 +19,14 @@ public class Parser {
         System.out.println(parseMe);
 
         expressions[0] = "[\\sA-Øa-ø'-]{1,}";
-        expressions[1] = "[1-9]\\d{0,2}[\\-\\s]?[a-z]?";
-        expressions[2] = "(\\d{2}|\\d)[. -]*(sal| {2}|\\.)";
-        expressions[3] = "\\b[0-9]{4}\\b";
-        expressions[4] = "\\D*";
+        expressions[1] = "[1-9]\\d{0,2}";
+        expressions[2] = "[a-z]?";
+        expressions[3] = "\\d{1,2}[. -]*(sal| {2}|\\.)";
+        expressions[4] = "\\b[0-9]{4}\\b";
+        expressions[5] = "\\D*";
 
+        System.out.println("Printing the parseMe string");
+        System.out.println("- - - -");
         for (int i = 0; i < expressions.length; i++)
         {
 
@@ -38,44 +41,16 @@ public class Parser {
 
                 String matchedString = parseMe.substring(matcher.start(), matcher.end());
 
-                result[i] = matchedString.trim().replace(",", "");
+                result[i] = matchedString.replaceFirst(",", "").trim();
 
-                parseMe = parseMe.replace(matchedString, "");
-                if (i == 1) // road
-                {
-                    splitRoad(matchedString);
-                }
+                parseMe = parseMe.replaceFirst(matchedString, "").trim();
+                System.out.println(parseMe);
                 break;
             }
 
         }
+        System.out.println("....");
 
         return result;
-    }
-
-    /**
-     * mega grim kode, men den skiller vejnavn og nummer fra hinanden. + den
-     * placerer vejnummer-bogstavet til sidst i resultsettet.
-     *
-     * @param roadNameNumber
-     */
-    private void splitRoad(String roadNameNumber)
-    {
-        Pattern pattern = Pattern.compile("\\d{1,}", Pattern.MULTILINE);
-        Matcher matcher = pattern.matcher(roadNameNumber);
-        while (matcher.find())
-        {
-            String matchedString = roadNameNumber.substring(matcher.start(), matcher.end());
-
-            result[1] = matchedString.trim();
-        }
-        pattern = Pattern.compile("\\D", Pattern.MULTILINE);
-        matcher = pattern.matcher(roadNameNumber);
-        while (matcher.find())
-        {
-            String matchedString = roadNameNumber.substring(matcher.start(), matcher.end());
-
-            result[5] = matchedString.trim();
-        }
     }
 }
