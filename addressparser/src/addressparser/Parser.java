@@ -31,7 +31,7 @@ public class Parser {
         } else if (parseMe.length() < 3)
         {
             throw new InvalidInputException("The input is too short");
-        }else if (parseMe.length() > 40)
+        }else if (parseMe.length() > 100)
         {
             throw new InvalidInputException("The input is too long");
         }
