@@ -40,10 +40,12 @@ public class ParserTest {
 
     /**
      * Test of parseThis method, of class Parser.
+     *
+     * @throws ExceptionPackage.InvalidInputException
      */
     @Test
     public void testDataSetA() {
-        System.out.println("parseThis");
+        System.out.println("Data Set A");
         String parseMe = "";
         Parser instance = new Parser();
         String[] expResult = new String[6];
@@ -53,6 +55,7 @@ public class ParserTest {
         expResult[3] = null;
         expResult[4] = null;
         expResult[5] = null;
+
         try {
             String[] result = instance.parseThis(parseMe);
             assertArrayEquals(expResult, result);
@@ -68,7 +71,7 @@ public class ParserTest {
      */
     @Test
     public void testDataSetB() {
-        System.out.println("parseThis");
+        System.out.println("Data Set B");
         String parseMe = "Rued Langgaards Vej";
         Parser instance = new Parser();
         String[] expResult = new String[6];
@@ -93,14 +96,14 @@ public class ParserTest {
      */
     @Test
     public void testDataSetC() {
-        System.out.println("parseThis");
+        System.out.println("Data Set C");
         String parseMe = "Rued Langgaards Vej 7, 5. sal. København S";
         Parser instance = new Parser();
         String[] expResult = new String[6];
         expResult[0] = "Rued Langgaards Vej";
         expResult[1] = "7";
         expResult[2] = null;
-        expResult[3] = "5. sal";
+        expResult[3] = "5 sal";
         expResult[4] = null;
         expResult[5] = "København S";
         try {
@@ -121,7 +124,7 @@ public class ParserTest {
      */
     @Test
     public void testDataSetD() {
-        System.out.println("parseThis");
+        System.out.println("Data Set D");
         String parseMe = "Rued Langgaards Vej 7 2300 København S";
         Parser instance = new Parser();
         String[] expResult = new String[6];
@@ -146,7 +149,7 @@ public class ParserTest {
      */
     @Test
     public void testDataSetE() {
-        System.out.println("parseThis");
+        System.out.println("Data Set E");
         String parseMe = "Rued Langgaards Vej 7 2300 København S";
         Parser instance = new Parser();
         String[] expResult = new String[6];
@@ -171,7 +174,7 @@ public class ParserTest {
      */
     @Test
     public void testDataSetF() {
-        System.out.println("parseThis");
+        System.out.println("Data Set F");
         String parseMe = "Rued Langgaards Vej 7A København S";
         Parser instance = new Parser();
         String[] expResult = new String[6];
@@ -190,13 +193,13 @@ public class ParserTest {
 
         }
     }
-    
-        /**
+
+    /**
      * Test of parseThis method, of class Parser.
      */
     @Test
     public void testDataSetG() {
-        System.out.println("parseThis");
+        System.out.println("Data Set G");
         String parseMe = "Rued Langgards Vej i København";
         Parser instance = new Parser();
         String[] expResult = new String[6];
