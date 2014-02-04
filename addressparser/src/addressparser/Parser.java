@@ -20,7 +20,7 @@ public class Parser {
 
         expressions[0] = "[\\sA-Øa-ø'-]{1,}";
         expressions[1] = "[1-9]\\d{0,2}";
-        expressions[2] = "([a-z]|[A-Z])?( |,)";
+        expressions[2] = "([a-z]|[A-Z])?( |\\s)?";
         expressions[3] = "\\d{1,2}[. -]*(sal| {2}|\\.)";
         expressions[4] = "\\b[0-9]{4}\\b";
         expressions[5] = "\\D*";
