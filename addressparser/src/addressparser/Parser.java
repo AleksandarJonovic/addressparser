@@ -9,50 +9,69 @@ import java.util.regex.Matcher;
 
 public class Parser {
 
-    String[] result = new String[6];
-    String[] expressions = new String[6];
-
+    /**
+     * Takes a string and splits it up into the different blocks that an address
+     * is made of and then return the array with the blocks. If the parsed
+     * address does not contain some information, null will take the
+     * corrosponding spot in the array.
+     *
+     * @param parseMe the address to parse. This must be a single address.
+     * @return a String array with all the blocks an address is made of.
+     */
     public String[] parseThis(String parseMe)
     {
-
-        //debug
-        //System.out.println(parseMe);
-
+        String[] result = new String[6]; // the array to return
+        String[] expressions = new String[6]; // the array with the regex
+        /**
+         * Here we add the regEx to the array expressions. Each expression has a
+         * corrosponding index with that of the wanted index of the result in
+         * the result array
+         */
         expressions[0] = "[\\sA-Øa-ø'-]{1,}";
         expressions[1] = "[1-9]\\d{0,2}";
-        expressions[2] = "([a-z]|[A-Z])?( |\\s)?";
+        expressions[2] = "([a-ø]|[A-Ø])?( |\\s)?";
         expressions[3] = "\\d{1,2}[. -]*(sal| {2}|\\.)";
         expressions[4] = "\\b[0-9]{4}\\b";
         expressions[5] = "\\D*";
 
-        //System.out.println("Printing the parseMe string");
-        //System.out.println("- - - -");
+        // go through the expressions
         for (int i = 0; i < expressions.length; i++)
         {
+            // create a pattern with the expression.
             Pattern pattern = Pattern.compile(expressions[i], Pattern.MULTILINE);
 
+            // replace " i " with a " , " for the regEx to divide the different blocks.
             parseMe = parseMe.replace(" i ", " , ");
 
             Matcher matcher = pattern.matcher(parseMe);
 
+            // find matches if any in the parseMe String
             while (matcher.find())
             {
-
+                // create a new string with the first matched find.
                 String matchedString = parseMe.substring(matcher.start(), matcher.end());
+                // remove nonwanted chars
                 matchedString = matchedString.replace(",", "").trim();
                 if (!matchedString.equals(""))
+                {
+                    // add the string to the resultset on the corrosponding spot.
                     result[i] = matchedString;
-                else
+                } else
+                {
+                    // ... unless it was an empty string
                     result[i] = null;
+                }
 
+                /**
+                 * remove the first appearence of the found string so that the
+                 * regEx will not find it again.
+                 */
                 parseMe = parseMe.replaceFirst(matchedString, "").trim();
-                //System.out.println(parseMe);
+                // break out and go on to the next regEx
                 break;
             }
 
         }
-        //System.out.println("....");
-
         return result;
     }
 }
