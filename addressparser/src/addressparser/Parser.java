@@ -16,7 +16,7 @@ public class Parser {
     {
 
         //debug
-        System.out.println(parseMe);
+        //System.out.println(parseMe);
 
         expressions[0] = "[\\sA-Øa-ø'-]{1,}";
         expressions[1] = "[1-9]\\d{0,2}";
@@ -25,8 +25,8 @@ public class Parser {
         expressions[4] = "\\b[0-9]{4}\\b";
         expressions[5] = "\\D*";
 
-        System.out.println("Printing the parseMe string");
-        System.out.println("- - - -");
+        //System.out.println("Printing the parseMe string");
+        //System.out.println("- - - -");
         for (int i = 0; i < expressions.length; i++)
         {
             Pattern pattern = Pattern.compile(expressions[i], Pattern.MULTILINE);
@@ -46,12 +46,12 @@ public class Parser {
                     result[i] = null;
 
                 parseMe = parseMe.replaceFirst(matchedString, "").trim();
-                System.out.println(parseMe);
+                //System.out.println(parseMe);
                 break;
             }
 
         }
-        System.out.println("....");
+        //System.out.println("....");
 
         return result;
     }
