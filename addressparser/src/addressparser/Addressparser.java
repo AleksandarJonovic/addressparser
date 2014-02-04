@@ -4,6 +4,8 @@
  */
 package addressparser;
 
+import ExceptionPackage.InvalidInputException;
+
 /**
  *
  * @author Alex
@@ -17,7 +19,8 @@ public class Addressparser {
     {
         Addressparser program = new Addressparser();
         String addressInput = ""
-                + "Rued Langgaards Vej"
+                + "Rued Langgaards Vej ?"
+                + "\nve"
                 + "\nRued Langgaards Vej 7 5. sal, København S"
                 + "\nRued Langgaards Vej 7 2300 København S"
                 + "\nRued Langgaards Vej 7, 5."
@@ -40,8 +43,9 @@ public class Addressparser {
 
         String[] differentAdresses = addresses.split("\n");
         String[] resultSet = new String[differentAdresses.length];
-        
+
         for (int i = 0; i < differentAdresses.length; i++)      /* 1 */
+
         {
             resultSet[i] = parseSingleAdress(differentAdresses[i]);
         }
@@ -58,14 +62,24 @@ public class Addressparser {
     private String parseSingleAdress(String address)
     {
         Parser parser = new Parser();
-        String[] addressSplitted = parser.parseThis(address);
+        String[] addressSplitted;
+        try
+        {
+            addressSplitted = parser.parseThis(address);
+        } catch (InvalidInputException ex)
+        {
+            return ex.getMessageString() + " - cause: " + ex.getCauseString();
+        };
         String finalString = "";
         for (int i = 0; i < addressSplitted.length; i++)          /* 2 */
+
         {
             //System.out.println(addressSplitted[i]);
             if (addressSplitted[i] != null)                       /* 3 */
+
             {
                 if (i == 3)                                       /* 4 */
+
                 {
                     finalString += addressSplitted[i].substring(0, 1);
                 } else
@@ -75,6 +89,7 @@ public class Addressparser {
 
             }
             if (i != addressSplitted.length - 1)                  /* 5 */
+
             {
                 finalString += "#";
             }
@@ -92,6 +107,7 @@ public class Addressparser {
     private void print(String[] addressesInput, String[] addressesOutput)
     {
         for (int i = 0; i < addressesInput.length; i++)         /* 6 */
+
         {
             System.out.println("Input:  " + addressesInput[i] + "\nOutput: " + addressesOutput[i]);
             System.out.println("- - - - ");
