@@ -1,3 +1,6 @@
 /addressparser/nbproject/private/
 /addressparser/dist/
 /addressparser/build/
+addressparser/build.xml
+addressparser/nbproject/build-impl.xml
+addressparser/nbproject/genfiles.properties
