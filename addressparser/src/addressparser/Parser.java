@@ -28,9 +28,12 @@ public class Parser {
         } else if (parseMe.contains("!"))
         {
             throw new InvalidInputException("Address contains an !");
-        } else if (parseMe.length() == 0 || parseMe.length() < 3)
+        } else if (parseMe.length() < 3)
         {
             throw new InvalidInputException("The input is too short");
+        }else if (parseMe.length() > 40)
+        {
+            throw new InvalidInputException("The input is too long");
         }
 
         String[] result = new String[6]; // the array to return
@@ -68,10 +71,9 @@ public class Parser {
                 // remove nonwanted chars
                 matchedString = matchedString.replace(",", "").trim();
                 if (!matchedString.equals(""))          /* 3 */
-
                 {
                     // add the string to the resultset on the corrosponding spot.
-                    result[i] = matchedString;
+                    result[i] = matchedString.replace(".", "").trim();
                 } else
                 {
                     // ... unless it was an empty string

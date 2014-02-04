@@ -19,9 +19,7 @@ public class Addressparser {
     {
         Addressparser program = new Addressparser();
         String addressInput = ""
-                + "Rued Langgaards Vej ?"
-                + "\nve"
-                + "\nRued Langgaards Vej 7 5. sal, København S"
+                + "Rued Langgaards Vej 7. 5. sal København S"
                 + "\nRued Langgaards Vej 7 2300 København S"
                 + "\nRued Langgaards Vej 7, 5."
                 + "\nRued Langgaards Vej 7A København S"
@@ -45,7 +43,6 @@ public class Addressparser {
         String[] resultSet = new String[differentAdresses.length];
 
         for (int i = 0; i < differentAdresses.length; i++)      /* 1 */
-
         {
             resultSet[i] = parseSingleAdress(differentAdresses[i]);
         }
