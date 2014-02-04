@@ -12,14 +12,26 @@ package ExceptionPackage;
  */
 public class InvalidInputException extends Exception {
 
+    String cause;
     /**
      * Creates a new instance of <code>InvalidInputException</code> without
      * detail message.
      */
     public InvalidInputException()
     {
+        cause = "Cause not specified";
     }
 
+    public String getCauseString()
+    {
+        return cause;
+    }
+    
+    public String getMessageString()
+    {
+        return "Invalid address input";
+    }
+    
     /**
      * Constructs an instance of <code>InvalidInputException</code> with the
      * specified detail message.
@@ -29,5 +41,6 @@ public class InvalidInputException extends Exception {
     public InvalidInputException(String msg)
     {
         super(msg);
+        cause = msg;
     }
 }

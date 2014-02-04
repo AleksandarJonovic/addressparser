@@ -18,7 +18,7 @@ public class Addressparser {
         Addressparser program = new Addressparser();
         String addressInput = ""
                 + "Rued Langgaards Vej"
-                + "\nRued Langgaards Vej 7, 5. sal, København S"
+                + "\nRued Langgaards Vej 7 5. sal, København S"
                 + "\nRued Langgaards Vej 7 2300 København S"
                 + "\nRued Langgaards Vej 7, 5."
                 + "\nRued Langgaards Vej 7A København S"
