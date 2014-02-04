@@ -19,7 +19,7 @@ public class Addressparser {
         
         String[] test = ps.parseThis("mariavej 23b 2300 maria er awesome by");
         
-        System.out.println("Printing the results 1");
+        System.out.println("Printing the results");
         for(int i = 0; i < test.length ; i++){
             System.out.println(test[i]);
         }
