@@ -19,8 +19,20 @@ public class Parser {
      * @param parseMe the address to parse. This must be a single address.
      * @return a String array with all the blocks an address is made of.
      */
-    public String[] parseThis(String parseMe)
+    public String[] parseThis(String parseMe) throws InvalidInputException
     {
+        // checks on the parseMe string
+        if (parseMe.contains("?"))
+        {
+            throw new InvalidInputException("Address contains an ?");
+        } else if (parseMe.contains("!"))
+        {
+            throw new InvalidInputException("Address contains an !");
+        } else if (parseMe.length() == 0 || parseMe.length() < 3)
+        {
+            throw new InvalidInputException("The input is too short");
+        }
+
         String[] result = new String[6]; // the array to return
         String[] expressions = new String[6]; // the array with the regex
         /**
@@ -37,6 +49,7 @@ public class Parser {
 
         // go through the expressions
         for (int i = 0; i < expressions.length; i++)    /* 1 */
+
         {
             // create a pattern with the expression.
             Pattern pattern = Pattern.compile(expressions[i], Pattern.MULTILINE);
@@ -48,12 +61,14 @@ public class Parser {
 
             // find matches if any in the parseMe String
             while (matcher.find())                      /* 2 */
+
             {
                 // create a new string with the first matched find.
                 String matchedString = parseMe.substring(matcher.start(), matcher.end());
                 // remove nonwanted chars
                 matchedString = matchedString.replace(",", "").trim();
                 if (!matchedString.equals(""))          /* 3 */
+
                 {
                     // add the string to the resultset on the corrosponding spot.
                     result[i] = matchedString;
