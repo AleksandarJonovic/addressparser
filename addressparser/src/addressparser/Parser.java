@@ -36,7 +36,7 @@ public class Parser {
         expressions[5] = "\\D*";
 
         // go through the expressions
-        for (int i = 0; i < expressions.length; i++)
+        for (int i = 0; i < expressions.length; i++)    /* 1 */
         {
             // create a pattern with the expression.
             Pattern pattern = Pattern.compile(expressions[i], Pattern.MULTILINE);
@@ -47,13 +47,13 @@ public class Parser {
             Matcher matcher = pattern.matcher(parseMe);
 
             // find matches if any in the parseMe String
-            while (matcher.find())
+            while (matcher.find())                      /* 2 */
             {
                 // create a new string with the first matched find.
                 String matchedString = parseMe.substring(matcher.start(), matcher.end());
                 // remove nonwanted chars
                 matchedString = matchedString.replace(",", "").trim();
-                if (!matchedString.equals(""))
+                if (!matchedString.equals(""))          /* 3 */
                 {
                     // add the string to the resultset on the corrosponding spot.
                     result[i] = matchedString;
