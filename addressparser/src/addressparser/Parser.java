@@ -20,7 +20,7 @@ public class Parser {
 
         expressions[0] = "[\\sA-Øa-ø'-]{1,}";
         expressions[1] = "[1-9]\\d{0,2}";
-        expressions[2] = "[a-z]?";
+        expressions[2] = "([a-z]|[A-Z])?( |,)";
         expressions[3] = "\\d{1,2}[. -]*(sal| {2}|\\.)";
         expressions[4] = "\\b[0-9]{4}\\b";
         expressions[5] = "\\D*";
@@ -29,7 +29,6 @@ public class Parser {
         System.out.println("- - - -");
         for (int i = 0; i < expressions.length; i++)
         {
-
             Pattern pattern = Pattern.compile(expressions[i], Pattern.MULTILINE);
 
             parseMe = parseMe.replace(" i ", " , ");
@@ -40,8 +39,11 @@ public class Parser {
             {
 
                 String matchedString = parseMe.substring(matcher.start(), matcher.end());
-
-                result[i] = matchedString.replaceFirst(",", "").trim();
+                matchedString = matchedString.replace(",", "").trim();
+                if (!matchedString.equals(""))
+                    result[i] = matchedString;
+                else
+                    result[i] = null;
 
                 parseMe = parseMe.replaceFirst(matchedString, "").trim();
                 System.out.println(parseMe);
