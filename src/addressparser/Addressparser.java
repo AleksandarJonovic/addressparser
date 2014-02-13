@@ -2,22 +2,22 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package dk.itu.addressparser;
+package addressparser;
 
-import dk.itu.ExceptionPackage.InvalidInputException;
+import ExceptionPackage.InvalidInputException;
 
 /**
  *
  * @author Alex
  */
-public class AddressParser {
+public class Addressparser {
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args)
     {
-        AddressParser program = new AddressParser();
+        Addressparser program = new Addressparser();
         String addressInput = ""
                 + "Rued Langgaards Vej 7. 5. sal København S"
                 + "\n Rued Langgards vej 7. København 2300 5.sal"
@@ -38,6 +38,8 @@ public class AddressParser {
      */
     public String[] parseAddresses(String addresses)
     {
+        Parser parser = new Parser();
+
         String[] differentAdresses = addresses.split("\n");
         String[] resultSet = new String[differentAdresses.length];
 
@@ -65,7 +67,7 @@ public class AddressParser {
         } catch (InvalidInputException ex)
         {
             return ex.getMessageString() + " - cause: " + ex.getCauseString();
-        }
+        };
         String finalString = "";
         for (int i = 0; i < addressSplitted.length; i++)          /* 2 */
 

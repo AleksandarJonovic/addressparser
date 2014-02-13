@@ -2,9 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package dk.itu.addressparser;
+package addressparser;
 
-import dk.itu.ExceptionPackage.InvalidInputException;
+import ExceptionPackage.InvalidInputException;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
@@ -92,5 +92,4 @@ public class Parser {
         }
         return result;
     }
-
 }
