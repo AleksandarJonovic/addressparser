@@ -70,10 +70,19 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="AddressMatcher.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="AddressMatcher.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/dk/itu/addressparser/AddressMatcher.java">
           <provider selected="true" editor-type-id="text-editor">
             <state line="9" column="13" selection-start="163" selection-end="163" vertical-scroll-proportion="0.0" vertical-offset="105" max-vertical-offset="900">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name=".gitignore" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="760">
               <folding />
             </state>
           </provider>
@@ -740,12 +749,12 @@
       <workItem from="1392292367006" duration="91000" />
       <workItem from="1392292458747" duration="178000" />
       <workItem from="1392292741497" duration="166000" />
-      <workItem from="1392292914048" duration="131000" />
+      <workItem from="1392292914048" duration="221000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="14743000" />
+    <option name="totallyTimeSpent" value="14833000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="59" y="22" width="1381" height="878" extended-state="6" />
@@ -824,6 +833,13 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/dk/itu/addressparser/AddressMatcher.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="9" column="13" selection-start="163" selection-end="163" vertical-scroll-proportion="0.0" vertical-offset="105" max-vertical-offset="900">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="760">
           <folding />
         </state>
       </provider>
