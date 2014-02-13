@@ -3,11 +3,37 @@ package addressparser;
 import ExceptionPackage.InvalidInputException;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by Christian on 12/02/14.
  */
 public class AddressMatcher {
+    
+    private static final ArrayList<String> rawAddressList = new ArrayList<>();
+    private static final ArrayList<String> cleanAddressList = new ArrayList<>();
+    
+    public AddressMatcher() throws FileNotFoundException {
+      try {
+      BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream("road_names.txt"), "LATIN1"));
+      StringBuilder sb = new StringBuilder();
+      String line = br.readLine();
+       
+      int i = 0;
+      while (line != null) {
+        rawAddressList.add(line);
+        cleanAddressList.add(cleanString(line));
+        line = br.readLine();
+      }
+      br.close();
+
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    }
 
   public static void matchStreet(String[] address) {
     String match = "";
@@ -57,13 +83,18 @@ public class AddressMatcher {
   }
 
   public static void main(String[] args) {
-    Parser p = new Parser();
-    try {
-        System.out.println(AddressMatcher.cleanString("A. P. Møller"));
-      AddressMatcher.matchStreet(p.parseThis(AddressMatcher.cleanString("A. P. Møller")));
-        
-    } catch (InvalidInputException e) {
-      e.getMessage();
-    }
+        try {
+            AddressMatcher am = new AddressMatcher();
+//    Parser p = new Parser();
+//    try {
+//        System.out.println(AddressMatcher.cleanString("A. P. Møller"));
+//      AddressMatcher.matchStreet(p.parseThis(AddressMatcher.cleanString("A. P. Møller")));
+//        
+//    } catch (InvalidInputException e) {
+//      e.getMessage();
+//    }
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(AddressMatcher.class.getName()).log(Level.SEVERE, null, ex);
+        }
   }
 }
