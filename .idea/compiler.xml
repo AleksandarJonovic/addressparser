@@ -23,6 +23,7 @@
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
         <module name="addressparser" />
+        <module name="addressparser (1)" />
       </profile>
     </annotationProcessing>
   </component>
