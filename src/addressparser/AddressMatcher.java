@@ -1,6 +1,6 @@
-package dk.itu.addressparser;
+package addressparser;
 
-import dk.itu.ExceptionPackage.InvalidInputException;
+import ExceptionPackage.InvalidInputException;
 
 import java.io.*;
 
