@@ -35,11 +35,33 @@ public class AddressMatcher {
     System.out.println("Input address: " + input);
     System.out.println("Matched address(es): " + match);
   }
+  
+  private static String cleanString(String input){
+      String cleanString;
+      
+      String dirtyString = input;
+      
+      dirtyString = dirtyString.replaceAll(" ", "");
+      dirtyString = dirtyString.replaceAll("\\.", "");
+      dirtyString = dirtyString.replaceAll(",", "");
+      dirtyString = dirtyString.replaceAll("-", "");
+      dirtyString = dirtyString.replaceAll("'", "");
+      dirtyString = dirtyString.replaceAll("´", "");
+      dirtyString = dirtyString.replaceAll("\\d", "");
+      dirtyString = dirtyString.toLowerCase();
+
+      
+      cleanString = dirtyString;
+      
+      return cleanString; 
+  }
 
   public static void main(String[] args) {
     Parser p = new Parser();
     try {
-      AddressMatcher.matchStreet(p.parseThis("A.P. Møllers Allé"));
+        System.out.println(AddressMatcher.cleanString("A. P. Møller"));
+      AddressMatcher.matchStreet(p.parseThis(AddressMatcher.cleanString("A. P. Møller")));
+        
     } catch (InvalidInputException e) {
       e.getMessage();
     }
