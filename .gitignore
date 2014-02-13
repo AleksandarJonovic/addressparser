@@ -20,3 +20,5 @@ addressparser/addressparser/addressparser.iml
 addressparser/addressparser/pom.xml
 addressparser/addressparser/src/main/java/addressparser/App.java
 addressparser/addressparser/src/test/java/addressparser/AppTest.java
+/nbproject/private/
+/build/
