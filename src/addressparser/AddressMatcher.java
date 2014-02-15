@@ -44,7 +44,7 @@ public class AddressMatcher {
     String match = "";
     String input = address[0].toLowerCase();
     try {
-      BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream("..\\road_names.txt"), "LATIN1"));
+      BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream("road_names.txt"), "LATIN1"));
       StringBuilder sb = new StringBuilder();
       String line = br.readLine();
 
