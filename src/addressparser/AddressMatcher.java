@@ -3,7 +3,10 @@ package addressparser;
 import ExceptionPackage.InvalidInputException;
 
 import java.io.*;
+import java.text.Collator;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -13,8 +16,8 @@ import java.util.logging.Logger;
  */
 public class AddressMatcher {
     
-    private static final ArrayList<String> rawAddressList = new ArrayList<>();
-    private static final ArrayList<String> cleanAddressList = new ArrayList<>();
+    private static ArrayList<String> rawAddressList = new ArrayList<>();
+    private static ArrayList<String> cleanAddressList = new ArrayList<>();
     
     public AddressMatcher() throws FileNotFoundException {
       try {
@@ -22,20 +25,22 @@ public class AddressMatcher {
       StringBuilder sb = new StringBuilder();
       String line = br.readLine();
        
-      int i = 0;
       while (line != null) {
         rawAddressList.add(line);
         cleanAddressList.add(cleanString(line));
         line = br.readLine();
       }
       br.close();
-
+      
     } catch (Exception e) {
       e.printStackTrace();
     }
+//      Collections.sort(cleanAddressList, Collator.getInstance());
+//      Collections.sort(rawAddressList, Collator.getInstance());
     }
-
-  public static void matchStreet(String[] address) {
+    
+  public static void matchStreetOld(String[] address) {
+      long startTime = System.currentTimeMillis(); 
     String match = "";
     String input = address[0].toLowerCase();
     try {
@@ -60,6 +65,21 @@ public class AddressMatcher {
     }
     System.out.println("Input address: " + input);
     System.out.println("Matched address(es): " + match);
+    System.out.println("It took " + ((System.currentTimeMillis() - startTime) / 1000.0) + " seconds");
+  }
+  
+  public static void matchStreet(String[] address) {
+    long startTime = System.currentTimeMillis();  
+    String input = cleanString(address[0]);
+    
+      if (cleanAddressList.contains(input)) {
+          System.out.println("Matched address " + input);
+          System.out.println("It took " + ((System.currentTimeMillis() - startTime) / 1000.0) + " seconds");
+      } else {
+          System.out.println("No match for address " + input);
+          System.out.println("It took " + ((System.currentTimeMillis() - startTime) / 1000.0) + " seconds");
+      }
+
   }
   
   private static String cleanString(String input){
@@ -82,19 +102,23 @@ public class AddressMatcher {
       return cleanString; 
   }
 
-  public static void main(String[] args) {
+  public static void main(String[] args) throws InvalidInputException {
+        AddressMatcher am;
+        Parser p = new Parser();
+        String[] input;
+        Scanner scanIn = new Scanner(System.in);
+  
         try {
-            AddressMatcher am = new AddressMatcher();
-//    Parser p = new Parser();
-//    try {
-//        System.out.println(AddressMatcher.cleanString("A. P. Møller"));
-//      AddressMatcher.matchStreet(p.parseThis(AddressMatcher.cleanString("A. P. Møller")));
-//        
-//    } catch (InvalidInputException e) {
-//      e.getMessage();
-//    }
+            am = new AddressMatcher();            
         } catch (FileNotFoundException ex) {
             Logger.getLogger(AddressMatcher.class.getName()).log(Level.SEVERE, null, ex);
         }
+      
+      while (true) {
+          System.out.print("Enter address: ");
+          input = p.parseThis(scanIn.nextLine());
+          matchStreet(input);
+          System.out.println("");   
+      }
   }
 }
