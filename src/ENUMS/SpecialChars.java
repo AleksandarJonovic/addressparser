@@ -18,8 +18,8 @@ public enum SpecialChars {
     DASH("-"),
     UNDERSCORE("_"),
     APOSTROPHE("'"),
-    APOSTROPHETWO("´"),
-    DIGITS("\\d");
+    APOSTROPHETWO("´");
+    //DIGITS("\\d"),
 
     
  

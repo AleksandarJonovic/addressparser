@@ -5,6 +5,7 @@
 package addressparser;
 
 import ExceptionPackage.InvalidInputException;
+import java.util.ArrayList;
 
 /**
  *
@@ -17,6 +18,12 @@ public class Addressparser {
      */
     public static void main(String[] args)
     {
+        ArrayList<String> strings = new ArrayList<>();
+        
+        strings.add("heje");
+        strings.add("hej");
+        System.out.println(strings.indexOf("hej"));
+        
         Addressparser program = new Addressparser();
         String addressInput = ""
                 + "Rued Langgaards Vej 7. 5. sal København S"
@@ -57,7 +64,7 @@ public class Addressparser {
      * @param address a string which may contain information about an address.
      * @return a string with address information splittet by an # char
      */
-    private String parseSingleAdress(String address)
+    public String parseSingleAdress(String address)
     {
         Parser parser = new Parser();
         String[] addressSplitted;
