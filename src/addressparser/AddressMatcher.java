@@ -1,5 +1,6 @@
 package addressparser;
 
+import ENUMS.SpecialChars;
 import ExceptionPackage.InvalidInputException;
 
 import java.io.*;
@@ -88,16 +89,13 @@ public class AddressMatcher {
       
       String dirtyString = input;
       
-      dirtyString = dirtyString.replaceAll(" ", "");
-      dirtyString = dirtyString.replaceAll("\\.", "");
-      dirtyString = dirtyString.replaceAll(",", "");
-      dirtyString = dirtyString.replaceAll("-", "");
-      dirtyString = dirtyString.replaceAll("'", "");
-      dirtyString = dirtyString.replaceAll("´", "");
-      dirtyString = dirtyString.replaceAll("\\d", "");
-      dirtyString = dirtyString.toLowerCase();
+      //Special Characters Enum used to extract what to cleanse.
+      for(SpecialChars s : SpecialChars.values())
+      {
+          dirtyString = dirtyString.replaceAll(s.getChar(),"");
+      }
 
-      
+      dirtyString = dirtyString.toLowerCase();
       cleanString = dirtyString;
       
       return cleanString; 

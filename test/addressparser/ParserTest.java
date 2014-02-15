@@ -12,15 +12,22 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import ExceptionPackage.InvalidInputException;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
 
 /**
  *
  * @author Alex
  */
+@RunWith(Parameterized.class)
+
 public class ParserTest {
 
-    public ParserTest() {
-    }
 
     @BeforeClass
     public static void setUpClass() {
@@ -38,185 +45,48 @@ public class ParserTest {
     public void tearDown() {
     }
 
+    @Parameters
+    public static Collection<Object[]> data() {
+        return Arrays.asList(new Object[][]{
+            {new String[]{""}, new String[]{null}},
+            {new String[]{"Rued Langgaards Vej"}, new String[]{"Rued Langgaards Vej", null, null, null, null, null}},
+            {new String[]{"Rued Langgaards Vej 7, 5. sal. København S"}, new String[]{"Rued Langgaards Vej", "7", null, "5 sal", null, "København S"}},
+            {new String[]{"Rued Langgaards Vej 7 2300 København S"}, new String[]{"Rued Langgaards Vej", "7", null, null, "2300", "København S"}},
+            {new String[]{"Rued Langgaards Vej 7 2300 København S"}, new String[]{"Rued Langgaards Vej", "7", null, null, "2300", "København S"}},
+            {new String[]{"Rued Langgaards Vej 7A København S"}, new String[]{"Rued Langgaards Vej", "7", "A", null, null, "København S"}},
+            {new String[]{"Rued Langgaards Vej i København"}, new String[]{"Rued Langgaards Vej", null, null, null, null, "København"}},
+        });
+    }
+
+    private final String[] actual;
+    private final String[] expected;
+
+    public ParserTest(String[] actual, String[] expected) {
+        this.actual = actual;
+        this.expected = expected;
+    }
+
+    @Test
+    public void testAll() {
+        try {
+            Parser instance = new Parser();
+            String[] testOutput = new String[5];
+            for (String s : actual) {
+                //This is where the parser methid is invoked.
+                testOutput = instance.parseThis(s);
+            }
+            
+            //Check the output with the expected output.
+            assertArrayEquals(expected, testOutput);
+        } catch (InvalidInputException ex) {
+            Logger.getLogger(ParserTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     /**
      * Test of parseThis method, of class Parser.
      *
      * @throws ExceptionPackage.InvalidInputException
      */
-    @Test
-    public void testDataSetA() {
-        System.out.println("Data Set A");
-        String parseMe = "";
-        Parser instance = new Parser();
-        String[] expResult = new String[6];
-        expResult[0] = null;
-        expResult[1] = null;
-        expResult[2] = null;
-        expResult[3] = null;
-        expResult[4] = null;
-        expResult[5] = null;
-
-        try {
-            String[] result = instance.parseThis(parseMe);
-            assertArrayEquals(expResult, result);
-        } catch (InvalidInputException ex) {
-
-            System.out.println(ex.getCauseString());
-
-        }
-    }
-
-    /**
-     * Test of parseThis method, of class Parser.
-     */
-    @Test
-    public void testDataSetB() {
-        System.out.println("Data Set B");
-        String parseMe = "Rued Langgaards Vej";
-        Parser instance = new Parser();
-        String[] expResult = new String[6];
-        expResult[0] = "Rued Langgaards Vej";
-        expResult[1] = null;
-        expResult[2] = null;
-        expResult[3] = null;
-        expResult[4] = null;
-        expResult[5] = null;
-        try {
-            String[] result = instance.parseThis(parseMe);
-            assertArrayEquals(expResult, result);
-        } catch (InvalidInputException ex) {
-
-            System.out.println(ex.getCauseString());
-
-        }
-    }
-
-    /**
-     * Test of parseThis method, of class Parser.
-     */
-    @Test
-    public void testDataSetC() {
-        System.out.println("Data Set C");
-        String parseMe = "Rued Langgaards Vej 7, 5. sal. København S";
-        Parser instance = new Parser();
-        String[] expResult = new String[6];
-        expResult[0] = "Rued Langgaards Vej";
-        expResult[1] = "7";
-        expResult[2] = null;
-        expResult[3] = "5 sal";
-        expResult[4] = null;
-        expResult[5] = "København S";
-        try {
-            String[] result = instance.parseThis(parseMe);
-            assertArrayEquals(expResult, result);
-        } catch (InvalidInputException ex) {
-
-            System.out.println(ex.getCauseString());
-
-        }
-
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of parseThis method, of class Parser.
-     */
-    @Test
-    public void testDataSetD() {
-        System.out.println("Data Set D");
-        String parseMe = "Rued Langgaards Vej 7 2300 København S";
-        Parser instance = new Parser();
-        String[] expResult = new String[6];
-        expResult[0] = "Rued Langgaards Vej";
-        expResult[1] = "7";
-        expResult[2] = null;
-        expResult[3] = null;
-        expResult[4] = "2300";
-        expResult[5] = "København S";
-        try {
-            String[] result = instance.parseThis(parseMe);
-            assertArrayEquals(expResult, result);
-        } catch (InvalidInputException ex) {
-
-            System.out.println(ex.getCauseString());
-
-        }
-    }
-
-    /**
-     * Test of parseThis method, of class Parser.
-     */
-    @Test
-    public void testDataSetE() {
-        System.out.println("Data Set E");
-        String parseMe = "Rued Langgaards Vej 7 2300 København S";
-        Parser instance = new Parser();
-        String[] expResult = new String[6];
-        expResult[0] = "Rued Langgaards Vej";
-        expResult[1] = "7";
-        expResult[2] = null;
-        expResult[3] = null;
-        expResult[4] = "2300";
-        expResult[5] = "København S";
-        try {
-            String[] result = instance.parseThis(parseMe);
-            assertArrayEquals(expResult, result);
-        } catch (InvalidInputException ex) {
-
-            System.out.println(ex.getCauseString());
-
-        }
-    }
-
-    /**
-     * Test of parseThis method, of class Parser.
-     */
-    @Test
-    public void testDataSetF() {
-        System.out.println("Data Set F");
-        String parseMe = "Rued Langgaards Vej 7A København S";
-        Parser instance = new Parser();
-        String[] expResult = new String[6];
-        expResult[0] = "Rued Langgaards Vej";
-        expResult[1] = "7";
-        expResult[2] = "A";
-        expResult[3] = null;
-        expResult[4] = null;
-        expResult[5] = "København S";
-        try {
-            String[] result = instance.parseThis(parseMe);
-            assertArrayEquals(expResult, result);
-        } catch (InvalidInputException ex) {
-
-            System.out.println(ex.getCauseString());
-
-        }
-    }
-
-    /**
-     * Test of parseThis method, of class Parser.
-     */
-    @Test
-    public void testDataSetG() {
-        System.out.println("Data Set G");
-        String parseMe = "Rued Langgards Vej i København";
-        Parser instance = new Parser();
-        String[] expResult = new String[6];
-        expResult[0] = "Rued Langgards Vej";
-        expResult[1] = null;
-        expResult[2] = null;
-        expResult[3] = null;
-        expResult[4] = null;
-        expResult[5] = "København";
-        try {
-            String[] result = instance.parseThis(parseMe);
-            assertArrayEquals(expResult, result);
-        } catch (InvalidInputException ex) {
-
-            System.out.println(ex.getCauseString());
-
-        }
-    }
-
+    
 }
