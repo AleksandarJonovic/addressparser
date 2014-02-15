@@ -59,7 +59,6 @@ public class AddressMatcher {
       }
       match = sb.toString();
       br.close();
-
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -71,9 +70,11 @@ public class AddressMatcher {
   public static void matchStreet(String[] address) {
     long startTime = System.currentTimeMillis();  
     String input = cleanString(address[0]);
-    
+    int streetIndex = -1; 
+    String rawAdress = null;
       if (cleanAddressList.contains(input)) {
-          System.out.println("Matched address " + input);
+          streetIndex = cleanAddressList.indexOf(input);
+          System.out.println("Matched address " + rawAddressList.get(streetIndex));
           System.out.println("It took " + ((System.currentTimeMillis() - startTime) / 1000.0) + " seconds");
       } else {
           System.out.println("No match for address " + input);
