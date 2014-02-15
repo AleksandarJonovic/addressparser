@@ -74,10 +74,10 @@ public class AddressMatcher {
     String rawAdress = null;
       if (cleanAddressList.contains(input)) {
           streetIndex = cleanAddressList.indexOf(input);
-          System.out.println("Matched address " + rawAddressList.get(streetIndex));
+          System.out.println("Matched street " + rawAddressList.get(streetIndex));
           System.out.println("It took " + ((System.currentTimeMillis() - startTime) / 1000.0) + " seconds");
       } else {
-          System.out.println("No match for address " + input);
+          System.out.println("No match for street " + input);
           System.out.println("It took " + ((System.currentTimeMillis() - startTime) / 1000.0) + " seconds");
       }
 
