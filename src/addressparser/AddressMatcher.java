@@ -1,5 +1,6 @@
 package addressparser;
 
+import ENUMS.SpecialChars;
 import ExceptionPackage.InvalidInputException;
 
 import java.io.*;
