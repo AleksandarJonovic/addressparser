@@ -69,16 +69,16 @@ public class AddressMatcher {
   }
   
   public static void matchStreet(String[] address) {
-    long startTime = System.currentTimeMillis();  
-    String input = cleanString(address[0]);
+    long startTime = System.currentTimeMillis();
+    String rawInput = address[0];
+    String input = cleanString(rawInput);
     int streetIndex = -1; 
-    String rawAdress = null;
       if (cleanAddressList.contains(input)) {
           streetIndex = cleanAddressList.indexOf(input);
           System.out.println("Matched street " + rawAddressList.get(streetIndex));
           System.out.println("It took " + ((System.currentTimeMillis() - startTime) / 1000.0) + " seconds");
       } else {
-          System.out.println("No match for street " + input);
+          System.out.println("No match for street " + rawInput);
           System.out.println("It took " + ((System.currentTimeMillis() - startTime) / 1000.0) + " seconds");
       }
 

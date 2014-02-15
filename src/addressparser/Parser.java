@@ -19,6 +19,7 @@ public class Parser {
      *
      * @param parseMe the address to parse. This must be a single address.
      * @return a String array with all the blocks an address is made of.
+     * @throws ExceptionPackage.InvalidInputException
      */
     public String[] parseThis(String parseMe) throws InvalidInputException
     {
@@ -38,25 +39,13 @@ public class Parser {
         }
 
         String[] result = new String[6]; // the array to return
-        String[] expressions = new String[6]; // the array with the regex
-        /**
-         * Here we add the regEx to the array expressions. Each expression has a
-         * corrosponding index with that of the wanted index of the result in
-         * the result array
-         */
-        expressions[0] = Regex.STREETNAME.getRegex();
-        expressions[1] = Regex.STREETNUMBER.getRegex();
-        expressions[2] = Regex.STREETLETTER.getRegex();
-        expressions[3] = Regex.FLOOR.getRegex();
-        expressions[4] = Regex.ZIPCODE.getRegex();
-        expressions[5] = Regex.CITY.getRegex();
 
         // go through the expressions
-        for (int i = 0; i < expressions.length; i++)    /* 1 */
+        for (int i = 0; i < Regex.values().length; i++)    /* 1 */
 
         {
             // create a pattern with the expression.
-            Pattern pattern = Pattern.compile(expressions[i], Pattern.MULTILINE);
+            Pattern pattern = Pattern.compile(Regex.values()[i].getRegex(), Pattern.MULTILINE);
 
             // replace " i " with a " , " for the regEx to divide the different blocks.
             parseMe = parseMe.replace(" i ", " , ");

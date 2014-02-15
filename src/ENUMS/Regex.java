@@ -30,5 +30,5 @@ public enum Regex {
     public String getRegex(){
         return regex;
     }
-
-}
+    
+    }
