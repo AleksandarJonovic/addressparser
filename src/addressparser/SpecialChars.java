@@ -19,7 +19,7 @@ public enum SpecialChars {
     UNDERSCORE("_"),
     APOSTROPHE("'"),
     APOSTROPHETWO("´"),
-    DIGITS("\\d");
+    DIGITStest("\\d");
 
     
  
