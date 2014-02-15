@@ -43,12 +43,12 @@ public class Parser {
          * corrosponding index with that of the wanted index of the result in
          * the result array
          */
-        expressions[0] = "[\\sA-Øa-ø'-]{1,}";
-        expressions[1] = "[1-9]\\d{0,2}";
-        expressions[2] = "([a-ø]|[A-Ø])?( |\\s)?";
-        expressions[3] = "\\d{1,2}[. -]*(sal| {2}|\\.)";
-        expressions[4] = "\\b[0-9]{4}\\b";
-        expressions[5] = "\\D*";
+        expressions[0] = Regex.STREETNAME.getRegex();
+        expressions[1] = Regex.STREETNUMBER.getRegex();
+        expressions[2] = Regex.STREETLETTER.getRegex();
+        expressions[3] = Regex.FLOOR.getRegex();
+        expressions[4] = Regex.ZIPCODE.getRegex();
+        expressions[5] = Regex.CITY.getRegex();
 
         // go through the expressions
         for (int i = 0; i < expressions.length; i++)    /* 1 */
