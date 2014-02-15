@@ -4,6 +4,7 @@
  */
 package addressparser;
 
+import ENUMS.Regex;
 import ExceptionPackage.InvalidInputException;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
