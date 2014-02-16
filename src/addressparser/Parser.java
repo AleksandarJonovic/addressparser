@@ -5,11 +5,103 @@
 package addressparser;
 
 import ENUMS.Regex;
+import ENUMS.SpecialChars;
 import ExceptionPackage.InvalidInputException;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
 public class Parser {
+
+    /**
+     * Not used atm as of 16-12-2014
+     *
+     * @param address the parsed addresses
+     */
+    public static void matchStreet(String[] address) {
+        long startTime = System.currentTimeMillis();
+        String input = cleanString(address[0]);
+        if (AddressMatcher.cleanAddressList.contains(input)) {
+            System.out.println("Matched address " + input);
+            System.out.println("It took " + ((System.currentTimeMillis() - startTime) / 1000.0) + " seconds");
+        } else {
+            System.out.println("No match for address " + input);
+            System.out.println("It took " + ((System.currentTimeMillis() - startTime) / 1000.0) + " seconds");
+        }
+    }
+
+    /**
+     * Takes the input, and character by character broaden the streetnames in
+     * the streetname file, to match the input. If there are 5 or less elements
+     * that matches at any given point, then it tests if they are the wanted
+     * element.
+     *
+     * @param input a string which has to be gone through to find an address.
+     * @return
+     * @throws InvalidInputException
+     */
+    public static String checkAddressExist(String input) throws InvalidInputException {
+        int indexLow = 0;
+        int indexHigh = AddressMatcher.cleanAddressList.size();
+        for (int i = 0; i < input.length(); i++) {
+            boolean firstAppereance = true;
+            boolean lastAppereance = true;
+            for (int j = indexLow; j < indexHigh; j++) {
+                String s3 = AddressMatcher.cleanAddressList.get(j);
+                if (s3.length() < i + 1) {
+                    continue;
+                }
+                String s1 = s3.substring(0, i + 1);
+                String s2 = input.substring(0, i + 1);
+                if (s1.equals(s2) && firstAppereance == true) {
+                    firstAppereance = false;
+                    indexLow = j;
+                }
+                int counter = 0;
+                do {
+                    int charValue = s2.charAt(i);
+                    String next = String.valueOf((char) (charValue + 1));
+                    s2 = input.substring(0, i) + next;
+                    counter++;
+                } while (!s1.equals(s2) && counter < 75 && lastAppereance == true);
+                if (s1.equals(s2) && lastAppereance == true) {
+                    lastAppereance = false;
+                    indexHigh = j;
+                }
+            }
+            firstAppereance = true;
+            lastAppereance = true;
+            if (indexHigh - indexLow <= 5) {
+                InvalidInputException ex = new InvalidInputException();
+                for (int k = indexHigh; k >= indexLow; k--) {
+                    if (input.length() >= AddressMatcher.cleanAddressList.get(k).length()) {
+                        if (AddressMatcher.cleanAddressList.get(k).equals(input.substring(0, AddressMatcher.cleanAddressList.get(k).length()))) {
+                            System.out.println("Best street name match: " + AddressMatcher.cleanAddressList.get(k));
+                            return AddressMatcher.cleanAddressList.get(k);
+                        }
+                    }
+                    ex.addPossibleStreetName(AddressMatcher.cleanAddressList.get(k));
+                }
+                throw ex;
+            }
+        }
+        throw new InvalidInputException("No street matches");
+    }
+
+    /**
+     *
+     * @param input some String which needs to be cleaned
+     * @return
+     */
+    public static String cleanString(String input) {
+        String cleanString;
+        String dirtyString = input;
+        for (SpecialChars s : SpecialChars.values()) {
+            dirtyString = dirtyString.replaceAll(s.getChar(), "");
+        }
+        dirtyString = dirtyString.toLowerCase();
+        cleanString = dirtyString;
+        return cleanString;
+    }
 
     /**
      * Takes a string and splits it up into the different blocks that an address
@@ -21,7 +113,7 @@ public class Parser {
      * @return a String array with all the blocks an address is made of.
      * @throws ExceptionPackage.InvalidInputException
      */
-    public String[] parseThis(String parseMe) throws InvalidInputException
+        public String[] parseThis(String parseMe) throws InvalidInputException
     {
         // checks on the parseMe string
         if (parseMe.contains("?"))

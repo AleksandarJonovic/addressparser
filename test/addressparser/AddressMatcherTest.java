@@ -27,8 +27,9 @@ import org.junit.runners.Parameterized;
  */
 
 @RunWith(Parameterized.class)
+
 public class AddressMatcherTest {
-    
+/*    
     private static String[] input = new String[]{"Rued Langgards Vej 7, 2300 København S", 
                              "Rued Langgaards Vej 7, 5. sal. København S",
                              "Rued Langgaards Vej 7A København S",
@@ -41,7 +42,7 @@ public class AddressMatcherTest {
                              "H C Andersens Vej",
                              "Aalgade"
                              };
-    
+    */
     
     @BeforeClass
     public static void setUpClass() {
@@ -63,13 +64,13 @@ public class AddressMatcherTest {
     public static Collection<Object[]> data() {
         //Build and return Arrays as lists in format; String[] <Test Input>, String[] <Expected Output>.
         return Arrays.asList(new Object[][]{
-            {new String[]{"brøndbynordvej"}, new String[]{"brøndbynordvej"}},
+            {new String[]{"Brøndby Nord Vej"}, new String[]{"brøndbynordvej"}},
             {new String[]{"Rued Langgaards Vej"}, new String[]{"ruedlanggaardsvej"}},
-            {new String[]{"Rued Langgaards Vej 7, 5. sal. København S"}, new String[]{"ruedlanggaardsvej"}},
-            {new String[]{"Rued Langgaards Vej 7 2300 København S"}, new String[]{"ruedlanggaardsvej"}},
-            {new String[]{"Rued Langgaards Vej 7 2300 København S"}, new String[]{"ruedlanggaardsvej"}},
-            {new String[]{"Rued Langgaards Vej 7A København S"}, new String[]{"ruedlanggaardsvej"}},
-            {new String[]{"Rued Langgaards Vej i København"}, new String[]{"ruedlanggaardsvej"}},
+            {new String[]{"Rued Langgaards Vej, 7, 5. sal. København S"}, new String[]{"ruedlanggaardsvej"}},
+            {new String[]{"Rued Langgaards Vej, 7, 2300 København S"}, new String[]{"ruedlanggaardsvej"}},
+            {new String[]{"Rued Langgaards Vej, 7, 2300 København S"}, new String[]{"ruedlanggaardsvej"}},
+            {new String[]{"Rued Langgaards Vej, 7A, København S"}, new String[]{"ruedlanggaardsvej"}},
+            {new String[]{"Rued Langgaards Vej, i København"}, new String[]{"ruedlanggaardsvej"}},
         });
     }
     
@@ -86,8 +87,15 @@ public class AddressMatcherTest {
 
         System.out.println(actual.length);
         System.out.println(expected.length);
-        for(String s : expected){
-        AddressMatcher.cleanString(s);
+        Addressparser ap = new Addressparser();
+        Parser p = new Parser();
+        for(String s : actual){
+            System.out.println(Parser.cleanString(ap.parseSingleAdress(s)));
+            try {
+                s = Parser.checkAddressExist(p.cleanString(ap.parseSingleAdress(s)));
+            } catch (InvalidInputException ex) {
+                Logger.getLogger(AddressMatcherTest.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         assertArrayEquals(expected, actual);
     }
