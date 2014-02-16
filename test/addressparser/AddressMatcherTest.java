@@ -30,6 +30,7 @@ public class AddressMatcherTest {
                              "Rued Langgaards Vej 7A København S",
                              "Rued Langgaards Vej i København",
                              "2300 København S, Rued Langgaards Vej 7",
+                             "København S 2300, Rued Langgaards Vej 7",
                              "10. Juli Vej, 6070 Christiansfeld",
                              "Haveforeningen af 10. maj 1918 7, 8260 Viby J",
                              "Ved Mønten 10 st 4, 2300 København S",
