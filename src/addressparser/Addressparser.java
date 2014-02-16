@@ -5,6 +5,8 @@
 package addressparser;
 
 import ExceptionPackage.InvalidInputException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * The address parser sends and receives information about addresses and then
@@ -37,8 +39,8 @@ public class Addressparser {
     /**
      * Splits a string with addresses for each line-break there is. Returns an
      * array of strings which have the information for each address split in
-     * usable information.
-     * Is not used anymore as of 16-12-2014 since the user can only enter 1 address.
+     * usable information. Is not used anymore as of 16-12-2014 since the user
+     * can only enter 1 address.
      *
      * @param addresses a string of addresses or a single address.
      * @return a string array with addresses.
@@ -76,7 +78,17 @@ public class Addressparser {
             // Therefore this is splitted so that only the number is in the output.
             if (addressSplitted[i] != null) /* 3 */ {
                 if (i == 3) /* 4 */ {
-                    finalString += addressSplitted[i].substring(0, 1);
+                    if (addressSplitted[i].contains("st")) {
+                        finalString += "0";
+                    } else {
+                        Pattern pattern = Pattern.compile("\\d*", Pattern.MULTILINE);
+                        Matcher matcher = pattern.matcher(addressSplitted[i]);
+                        while (matcher.find()) {
+                            finalString += addressSplitted[i].substring(matcher.start(), matcher.end());
+
+                        }
+                    }
+
                 } else {
                     finalString += addressSplitted[i];
                 }
