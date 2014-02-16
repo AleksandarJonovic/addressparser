@@ -7,6 +7,9 @@ package addressparser;
 import ENUMS.Regex;
 import ENUMS.SpecialChars;
 import ExceptionPackage.InvalidInputException;
+import java.io.FileNotFoundException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
@@ -23,14 +26,18 @@ public class Parser {
      * @return
      * @throws InvalidInputException
      */
-    public static String checkAddressExist(String input) throws InvalidInputException {
+    public String checkAddressExist(String input) throws InvalidInputException {
+
+        try {
+            AddressMatcher am = new AddressMatcher();
+
         int indexLow = 0;
-        int indexHigh = AddressMatcher.cleanAddressList.size();
+        int indexHigh = am.cleanAddressList.size();
         for (int i = 0; i < input.length(); i++) {
             boolean firstAppereance = true;
             boolean lastAppereance = true;
             for (int j = indexLow; j < indexHigh; j++) {
-                String s3 = AddressMatcher.cleanAddressList.get(j);
+                String s3 = am.cleanAddressList.get(j);
                 if (s3.length() < i + 1) {
                     continue;
                 }
@@ -57,18 +64,22 @@ public class Parser {
             if (indexHigh - indexLow <= 5) {
                 InvalidInputException ex = new InvalidInputException();
                 for (int k = indexHigh; k >= indexLow; k--) {
-                    if (input.length() >= AddressMatcher.cleanAddressList.get(k).length()) {
-                        if (AddressMatcher.cleanAddressList.get(k).equals(input.substring(0, AddressMatcher.cleanAddressList.get(k).length()))) {
-                            System.out.println("Best street name match: " + AddressMatcher.cleanAddressList.get(k));
-                            return AddressMatcher.cleanAddressList.get(k);
+                    if (input.length() >= am.cleanAddressList.get(k).length()) {
+                        if (am.cleanAddressList.get(k).equals(input.substring(0, am.cleanAddressList.get(k).length()))) {
+                            System.out.println("Best street name match: " + am.cleanAddressList.get(k));
+                            return am.cleanAddressList.get(k);
                         }
                     }
-                    ex.addPossibleStreetName(AddressMatcher.cleanAddressList.get(k));
+                    ex.addPossibleStreetName(am.cleanAddressList.get(k));
                 }
                 throw ex;
             }
         }
         throw new InvalidInputException("No street matches");
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Parser.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 
     /**
@@ -76,7 +87,7 @@ public class Parser {
      * @param input some String which needs to be cleaned
      * @return
      */
-    public static String cleanString(String input) {
+    public String cleanString(String input) {
         String cleanString;
         String dirtyString = input;
         for (SpecialChars s : SpecialChars.values()) {
@@ -162,4 +173,29 @@ public class Parser {
         }
         return result;
     }
+        public String parseStreetAddress(String s){
+                    s = cleanString(s);
+            try {
+                Addressparser ap = new Addressparser();
+                String streetName = checkAddressExist(s);
+                // Remove the way the user has typed the address...
+                if (streetName != null) {
+                    for (int i = 0; i < streetName.length(); i++) {
+                        s = s.replaceFirst(streetName.substring(i, i + 1), "");
+                    }
+                }
+                // ... and replace it with our version + a ","
+                String s3 = streetName + ", " + s;
+                System.out.println(ap.parseSingleAdress(s3));
+                System.out.println("");
+                
+                return s;
+            } catch (InvalidInputException ex) {
+                // if no other street names was found it will print the cause.
+                ex.printPossibleStreetName();
+                System.out.println("");
+            }
+            return s;
+        }
+
 }

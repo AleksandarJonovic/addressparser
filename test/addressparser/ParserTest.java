@@ -55,7 +55,7 @@ public class ParserTest {
             {new String[]{"Rued Langgaards Vej, 7 2300 København S"}, new String[]{"Rued Langgaards Vej", "7", null, null, "2300", "København S"}},
             {new String[]{"Rued Langgaards Vej, 7 2300 København S"}, new String[]{"Rued Langgaards Vej", "7", null, null, "2300", "København S"}},
             {new String[]{"Rued Langgaards Vej, 7a København S"}, new String[]{"Rued Langgaards Vej", "7", "a", null, null, "København S"}},
-            {new String[]{"Rued Langgaards Vej, i København"}, new String[]{"Rued Langgaards Vej", null, null, null, null, "København"}},
+            {new String[]{"Rued Langgaards Vej i København"}, new String[]{"Rued Langgaards Vej", null, null, null, null, "København"}},
         });
     }
 
