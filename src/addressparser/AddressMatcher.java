@@ -15,12 +15,13 @@ public class AddressMatcher {
         try {
             System.out.println("Input: " + input);
             System.out.println("");
-            String output = p.parseStreetAddress(input);
+            output = p.parseStreetAddress(input);
             System.out.println("");
             System.out.println("Output: " + output);
             System.out.println("");
         } catch (InvalidInputException ex) {
             ex.printPossibleStreetName();
+            output = "Invalid address";
             System.out.println("");
         }
     }
