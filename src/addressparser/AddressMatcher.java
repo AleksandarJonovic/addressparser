@@ -38,41 +38,9 @@ public class AddressMatcher {
         } catch (Exception e) {
             e.printStackTrace();
         }
-//      Collections.sort(cleanAddressList, Collator.getInstance());
-//      Collections.sort(rawAddressList, Collator.getInstance());
     }
 
-    /*
-     public static void matchStreetOld(String[] address) {
-     long startTime = System.currentTimeMillis(); 
-     String match = "";
-     String input = address[0].toLowerCase();
-     try {
-     BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream("road_names.txt"), "LATIN1"));
-     StringBuilder sb = new StringBuilder();
-     String line = br.readLine();
 
-     while (line != null) {
-     match = line;
-     line = line.replaceAll(" ", "").toLowerCase();
-     if (line.contains(input.replaceAll(" ", ""))) {
-     sb.append(match);
-     sb.append(System.lineSeparator());
-     }
-     line = br.readLine();
-     }
-     match = sb.toString();
-     br.close();
-
-     } catch (Exception e) {
-     e.printStackTrace();
-     }
-     System.out.println("Input address: " + input);
-     System.out.println("Matched address(es): " + match);
-     System.out.println("It took " + ((System.currentTimeMillis() - startTime) / 1000.0) + " seconds");
-     }
-  
-     */
     public static void matchStreet(String[] address) {
         long startTime = System.currentTimeMillis();
         String input = cleanString(address[0]);
@@ -86,7 +54,7 @@ public class AddressMatcher {
 
     }
 
-    private static String checkAddressExist(String input) {
+    private static String checkAddressExist(String input) throws InvalidInputException{
         //System.out.println(cleanAddressList.get(0));
         int indexLow = 0;
         int indexHigh = cleanAddressList.size();
@@ -122,21 +90,20 @@ public class AddressMatcher {
             lastAppereance = true;
 
             if (indexHigh - indexLow <= 5) {
+                InvalidInputException ex = new InvalidInputException();
                 for (int k = indexHigh; k >= indexLow; k--) {
                     if (input.length() >= cleanAddressList.get(k).length()) {
                         if (cleanAddressList.get(k).equals(input.substring(0, cleanAddressList.get(k).length()))) {
-                            System.out.println("Bedste match: " + cleanAddressList.get(k));
+                            System.out.println("Best match: " + cleanAddressList.get(k));
                             return cleanAddressList.get(k);
                         }
                     }
-                    System.out.println("Muligt match: " + cleanAddressList.get(k));
+                    ex.addPossibleStreetName(cleanAddressList.get(k));
                 }
-                System.out.println("fandt ikke præcist match men 5 eller mindre elementer passer");
-                return null;
+                throw ex;
             }
         }
-        System.out.println("Fandt ikke et match");
-        return null;
+        throw new InvalidInputException("No street matches");
     }
 
     private static String cleanString(String input) {
@@ -160,7 +127,7 @@ public class AddressMatcher {
         Parser p = new Parser();
         Addressparser ap = new Addressparser();
         String[] input;
-        Scanner scanIn = new Scanner(System.in);
+        Scanner scanIn = new Scanner(System.in, "ISO-8859-1");
 
         try {
             am = new AddressMatcher();
@@ -171,25 +138,29 @@ public class AddressMatcher {
         while (true) {
             System.out.print("Enter address: ");
             String s = scanIn.nextLine();
-
-            input = p.parseThis(s);
-            matchStreet(input);
+            //input = p.parseThis(s);
+            //matchStreet(input);
             System.out.println("");
-
-            s = cleanString(s);
-            // anders metode
-            String streetName = checkAddressExist(s);
+            
+            // anders metode     
+            String s2 = cleanString(s);
+            s = s.toLowerCase();
+            try{
+            String streetName = checkAddressExist(s2);
             if (streetName != null) {
                 for (int i = 0; i < streetName.length() ; i ++) {
                     s = s.replaceFirst(streetName.substring(i,i+1), "");
                 }
             }
-            System.out.println("test " + s);
+            String s3 = streetName + ", "+ s;
+            System.out.println(ap.parseSingleAdress(s3));
+            System.out.println("");
+            
+            }catch(InvalidInputException ex)
+            {
+                ex.printPossibleStreetName();
+                System.out.println("");
+            }
         }
-    }
-    
-    private String print()
-    {
-        return "";
     }
 }
