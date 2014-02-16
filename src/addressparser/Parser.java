@@ -13,27 +13,25 @@ import java.io.FileNotFoundException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
 public class Parser {
+
     private ArrayList<String> rawAddressList = new ArrayList<>();
     private ArrayList<String> cleanAddressList = new ArrayList<>();
 
-      /**
-     * The constructor of the Parser. It loads in the road_names.txt
-     * file, and creates two arrays, a cleaned one and a raw one. The clean one
-     * is used for comparing with user-input the other one is used for output.
-     * Here we also sort the two collections.
+    /**
+     * The constructor of the Parser. It loads in the road_names.txt file, and
+     * creates two arrays, a cleaned one and a raw one. The clean one is used
+     * for comparing with user-input the other one is used for output. Here we
+     * also sort the two collections.
      *
      * @throws FileNotFoundException throws it if there went something wrong
      * with reading the streetnames file.
      */
-
     public Parser() {
-                try {
+        try {
             BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream("road_names.txt"), "LATIN1"));
             StringBuilder sb = new StringBuilder();
             String line = br.readLine();
@@ -51,6 +49,7 @@ public class Parser {
             e.printStackTrace();
         }
     }
+
     /**
      * Takes the input, and character by character broaden the streetnames in
      * the streetname file, to match the input. If there are 5 or less elements
@@ -60,7 +59,7 @@ public class Parser {
      * @param input a string which has to be gone through to find an address.
      * @return
      * @throws InvalidInputException
-     * 
+     *
      */
     public String checkAddressExist(String input) throws InvalidInputException {
 
@@ -137,29 +136,22 @@ public class Parser {
      * @return a String array with all the blocks an address is made of.
      * @throws ExceptionPackage.InvalidInputException
      */
-        public String[] parseThis(String parseMe) throws InvalidInputException
-    {
+    public String[] parseThis(String parseMe) throws InvalidInputException {
         // checks on the parseMe string
-        if (parseMe.contains("?"))
-        {
+        if (parseMe.contains("?")) {
             throw new InvalidInputException("Address contains an ?");
-        } else if (parseMe.contains("!"))
-        {
+        } else if (parseMe.contains("!")) {
             throw new InvalidInputException("Address contains an !");
-        } else if (parseMe.length() < 3)
-        {
+        } else if (parseMe.length() < 3) {
             throw new InvalidInputException("The input is too short");
-        }else if (parseMe.length() > 100)
-        {
+        } else if (parseMe.length() > 100) {
             throw new InvalidInputException("The input is too long");
         }
 
         String[] result = new String[6]; // the array to return
 
         // go through the expressions
-        for (int i = 0; i < Regex.values().length; i++)    /* 1 */
-
-        {
+        for (int i = 0; i < Regex.values().length; i++) /* 1 */ {
             // create a pattern with the expression.
             Pattern pattern = Pattern.compile(Regex.values()[i].getRegex(), Pattern.MULTILINE);
 
@@ -169,19 +161,15 @@ public class Parser {
             Matcher matcher = pattern.matcher(parseMe);
 
             // find matches if any in the parseMe String
-            while (matcher.find())                      /* 2 */
-
-            {
+            while (matcher.find()) /* 2 */ {
                 // create a new string with the first matched find.
                 String matchedString = parseMe.substring(matcher.start(), matcher.end());
                 // remove nonwanted chars
                 matchedString = matchedString.replace(",", "").trim();
-                if (!matchedString.equals(""))          /* 3 */
-                {
+                if (!matchedString.equals("")) /* 3 */ {
                     // add the string to the resultset on the corrosponding spot.
                     result[i] = matchedString.replace(".", "").trim();
-                } else
-                {
+                } else {
                     // ... unless it was an empty string
                     result[i] = null;
                 }
@@ -192,8 +180,9 @@ public class Parser {
                  */
                 parseMe = parseMe.trim();
                 parseMe += " ";
-                while (parseMe.substring(0,1).equals(","))
+                while (parseMe.substring(0, 1).equals(",")) {
                     parseMe = parseMe.replaceFirst(",", "");
+                }
                 parseMe = parseMe.replaceFirst(matchedString, "").trim();
                 // break out and go on to the next regEx
                 break;
@@ -202,19 +191,20 @@ public class Parser {
         }
         return result;
     }
-        public String parseStreetAddress(String s) throws InvalidInputException{
-                    s = cleanString(s);
-                String streetName = checkAddressExist(s);
-                // Remove the way the user has typed the address...
-                if (streetName != null) {
-                    for (int i = 0; i < streetName.length(); i++) {
-                        s = s.replaceFirst(streetName.substring(i, i + 1), "");
-                    }
-                }
-                // ... and replace it with our version + a ","
-                s = streetName + ", " + s;
-                return parseSingleAdress(s);
+
+    public String parseStreetAddress(String s) throws InvalidInputException {
+        s = cleanString(s);
+        String streetName = checkAddressExist(s);
+        // Remove the way the user has typed the address...
+        if (streetName != null) {
+            for (int i = 0; i < streetName.length(); i++) {
+                s = s.replaceFirst(streetName.substring(i, i + 1), "");
+            }
         }
+        // ... and replace it with our version + a ","
+        s = streetName + ", " + s;
+        return parseSingleAdress(s);
+    }
 
     /**
      * Takes a String and then split it into blocks of information about an
