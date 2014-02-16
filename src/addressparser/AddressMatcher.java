@@ -117,11 +117,11 @@ public class AddressMatcher {
             firstAppereance = true;
             lastAppereance = true;
 
-            //If the code was successful at finding 2 indexes close to
-            //eachother then we check through each of those results that are on
-            //those indexes. If any of the matches the substring of the input
-            //with that length then return it, otherwise throw an exception
-            //with those matches it did find
+            //  If the code was successful at finding 2 indexes close to
+            //  eachother then we check through each of those results that are on
+            //  those indexes. If any of the matches the substring of the input
+            //  with that length then return it, otherwise throw an exception
+            //  with those matches it did find
             if (indexHigh - indexLow <= 5) {
                 InvalidInputException ex = new InvalidInputException();
                 for (int k = indexHigh; k >= indexLow; k--) {
