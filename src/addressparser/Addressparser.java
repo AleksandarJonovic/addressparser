@@ -18,25 +18,6 @@ import java.util.regex.Pattern;
 public class Addressparser {
 
     /**
-     * This main method is now outdated. The active main method as of 16-12-2014
-     * is in AddressMatcher.
-     *
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-
-        Addressparser program = new Addressparser();
-        String addressInput = ""
-                + "Rued Langgaards Vej 7. 5. sal København S"
-                + "\n Rued Langgards vej 7. København 2300 5.sal"
-                + "\nRued Langgaards Vej 7 2300 København S"
-                + "\nRued Langgaards Vej 7, 5."
-                + "\nRued Langgaards Vej 7A København S"
-                + "\nRued Langgaards Vej i København";
-        program.print(addressInput.split("\n"), program.parseAddresses(addressInput));
-    }
-
-    /**
      * Splits a string with addresses for each line-break there is. Returns an
      * array of strings which have the information for each address split in
      * usable information. Is not used anymore as of 16-12-2014 since the user

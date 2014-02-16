@@ -12,22 +12,6 @@ import java.util.regex.Matcher;
 
 public class Parser {
 
-    /**
-     * Not used atm as of 16-12-2014
-     *
-     * @param address the parsed addresses
-     */
-    public static void matchStreet(String[] address) {
-        long startTime = System.currentTimeMillis();
-        String input = cleanString(address[0]);
-        if (AddressMatcher.cleanAddressList.contains(input)) {
-            System.out.println("Matched address " + input);
-            System.out.println("It took " + ((System.currentTimeMillis() - startTime) / 1000.0) + " seconds");
-        } else {
-            System.out.println("No match for address " + input);
-            System.out.println("It took " + ((System.currentTimeMillis() - startTime) / 1000.0) + " seconds");
-        }
-    }
 
     /**
      * Takes the input, and character by character broaden the streetnames in
