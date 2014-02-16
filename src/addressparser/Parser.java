@@ -64,9 +64,6 @@ public class Parser {
      */
     public String checkAddressExist(String input) throws InvalidInputException {
 
-        try {
-            AddressMatcher am = new AddressMatcher();
-
         int indexLow = 0;
         int indexHigh = cleanAddressList.size();
         for (int i = 0; i < input.length(); i++) {
@@ -112,10 +109,6 @@ public class Parser {
             }
         }
         throw new InvalidInputException("No street matches");
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(Parser.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
     }
 
     /**
@@ -209,9 +202,8 @@ public class Parser {
         }
         return result;
     }
-        public String parseStreetAddress(String s){
+        public String parseStreetAddress(String s) throws InvalidInputException{
                     s = cleanString(s);
-            try {
                 String streetName = checkAddressExist(s);
                 // Remove the way the user has typed the address...
                 if (streetName != null) {
@@ -221,16 +213,7 @@ public class Parser {
                 }
                 // ... and replace it with our version + a ","
                 s = streetName + ", " + s;
-                System.out.println(parseSingleAdress(s));
-                System.out.println("");
-                
-                return s;
-            } catch (InvalidInputException ex) {
-                // if no other street names was found it will print the cause.
-                ex.printPossibleStreetName();
-                System.out.println("");
-            }
-            return s;
+                return parseSingleAdress(s);
         }
 
     /**
