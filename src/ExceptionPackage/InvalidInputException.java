@@ -6,6 +6,8 @@
 
 package ExceptionPackage;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Anders
@@ -13,6 +15,7 @@ package ExceptionPackage;
 public class InvalidInputException extends Exception {
 
     String cause;
+    ArrayList<String> possibleStreetNames = new ArrayList<>();
     /**
      * Creates a new instance of <code>InvalidInputException</code> without
      * detail message.
@@ -30,6 +33,25 @@ public class InvalidInputException extends Exception {
     public String getMessageString()
     {
         return "Invalid address input";
+    }
+    
+    public void addPossibleStreetName(String possibleStreetName)
+    {
+        possibleStreetNames.add(possibleStreetName);
+    }
+    
+    public void printPossibleStreetName()
+    {
+        if (possibleStreetNames.isEmpty())
+        {
+            System.out.println("No street matches");
+            return;
+        }
+        System.out.println("No precise street was found, did you mean one of the following?");
+        for(String possibleStreetName : possibleStreetNames)
+        {
+            System.out.println(possibleStreetName);
+        }
     }
     
     /**
