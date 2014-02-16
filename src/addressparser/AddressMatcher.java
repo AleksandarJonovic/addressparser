@@ -40,7 +40,6 @@ public class AddressMatcher {
         }
     }
 
-
     public static void matchStreet(String[] address) {
         long startTime = System.currentTimeMillis();
         String input = cleanString(address[0]);
@@ -54,14 +53,19 @@ public class AddressMatcher {
 
     }
 
-    private static String checkAddressExist(String input) throws InvalidInputException{
-        //System.out.println(cleanAddressList.get(0));
+    /**
+     * 
+     * @param input a string which has to be gone through to find an address.
+     * @return
+     * @throws InvalidInputException 
+     */
+    private static String checkAddressExist(String input) throws InvalidInputException {
         int indexLow = 0;
         int indexHigh = cleanAddressList.size();
         for (int i = 0; i < input.length(); i++) {
             boolean firstAppereance = true;
             boolean lastAppereance = true;
-            for (int j = 0; j < cleanAddressList.size(); j++) {
+            for (int j = indexLow; j < indexHigh; j++) {
                 String s3 = cleanAddressList.get(j);
                 if (s3.length() < i + 1) {
                     continue;
@@ -106,6 +110,11 @@ public class AddressMatcher {
         throw new InvalidInputException("No street matches");
     }
 
+    /**
+     * 
+     * @param input some String which needs to be cleaned
+     * @return 
+     */
     private static String cleanString(String input) {
         String cleanString;
 
@@ -122,9 +131,17 @@ public class AddressMatcher {
         return cleanString;
     }
 
+    /**
+     * The active main method of the program. Waits for the user to input some
+     * text and prints the address information in the correct format.
+     * If something went wrong, the exception information will be printed instead.
+     *
+     * @param args
+     * @throws InvalidInputException
+     */
     public static void main(String[] args) throws InvalidInputException {
         AddressMatcher am;
-        Parser p = new Parser();
+        //Parser p = new Parser(); // Atm no need to have a direct connection.
         Addressparser ap = new Addressparser();
         String[] input;
         Scanner scanIn = new Scanner(System.in, "ISO-8859-1");
@@ -135,29 +152,33 @@ public class AddressMatcher {
             Logger.getLogger(AddressMatcher.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+        // wait for the user to input text, handle it and wait for the next.
         while (true) {
             System.out.print("Enter address: ");
             String s = scanIn.nextLine();
-            //input = p.parseThis(s);
-            //matchStreet(input);
-            System.out.println("");
             
-            // anders metode     
+            //input = p.parseThis(s); // not used atm
+            //matchStreet(input); // not used atm
+            
+            System.out.println("");
+
             String s2 = cleanString(s);
             s = s.toLowerCase();
-            try{
-            String streetName = checkAddressExist(s2);
-            if (streetName != null) {
-                for (int i = 0; i < streetName.length() ; i ++) {
-                    s = s.replaceFirst(streetName.substring(i,i+1), "");
+            try {
+                String streetName = checkAddressExist(s2);
+                // Remove the way the user has typed the address...
+                if (streetName != null) {
+                    for (int i = 0; i < streetName.length(); i++) {
+                        s = s.replaceFirst(streetName.substring(i, i + 1), "");
+                    }
                 }
-            }
-            String s3 = streetName + ", "+ s;
-            System.out.println(ap.parseSingleAdress(s3));
-            System.out.println("");
-            
-            }catch(InvalidInputException ex)
-            {
+                // ... and replace it with our version + a ","
+                String s3 = streetName + ", " + s;
+                System.out.println(ap.parseSingleAdress(s3));
+                System.out.println("");
+
+            } catch (InvalidInputException ex) {
+                // if no other street names was found it will print the cause.
                 ex.printPossibleStreetName();
                 System.out.println("");
             }

@@ -48,7 +48,7 @@ public class Parser {
             Pattern pattern = Pattern.compile(Regex.values()[i].getRegex(), Pattern.MULTILINE);
 
             // replace " i " with a " , " for the regEx to divide the different blocks.
-            parseMe = parseMe.replace(" i ", " , ");
+            parseMe = parseMe.replace(" i ", " , ").trim();
 
             Matcher matcher = pattern.matcher(parseMe);
 
@@ -56,7 +56,6 @@ public class Parser {
             while (matcher.find())                      /* 2 */
 
             {
-                System.out.println(parseMe);
                 // create a new string with the first matched find.
                 String matchedString = parseMe.substring(matcher.start(), matcher.end());
                 // remove nonwanted chars
@@ -75,8 +74,9 @@ public class Parser {
                  * remove the first appearence of the found string so that the
                  * regEx will not find it again.
                  */
+                parseMe = parseMe.trim();
                 parseMe += " ";
-                if (parseMe.substring(0,1).equals(","))
+                while (parseMe.substring(0,1).equals(","))
                     parseMe = parseMe.replaceFirst(",", "");
                 parseMe = parseMe.replaceFirst(matchedString, "").trim();
                 // break out and go on to the next regEx
