@@ -46,6 +46,7 @@ public class AddressMatcherTest {
     
     @BeforeClass
     public static void setUpClass() {
+        Parser p = new Parser();
     }
     
     @AfterClass
@@ -71,6 +72,14 @@ public class AddressMatcherTest {
             {new String[]{"Rued Langgaards Vej, 7, 2300 København S"}, new String[]{"ruedlanggaardsvej#7###2300#københavn s"}},
             {new String[]{"Rued Langgaards Vej, 7A, København S"}, new String[]{"ruedlanggaardsvej#7#a###københavn s"}},
             {new String[]{"Rued Langgaards Vej, i København"}, new String[]{"ruedlanggaardsvej#####københavn"}},
+            {new String[]{"2300 København S, Rued Langgaards Vej 7"}, new String[]{"Invalid address"}},
+            
+            {new String[]{"København S 2300, Rued Langgaards Vej 7"}, new String[]{"Invalid address"}},
+            {new String[]{"10. Juli Vej, 6070 Christiansfeld"}, new String[]{"10julivej####6070#christiansfeld"}},
+            {new String[]{"Haveforeningen af 10. maj 1918 7, 8260 Viby J"}, new String[]{"haveforeningenaf10maj1918#7###8260#viby j"}},
+            {new String[]{"Ved Mønten 10 st 2300 København S"}, new String[]{"vedmønten#10##0#2300#københavn s"}},
+            {new String[]{"H C Andersens Vej"}, new String[]{"hcandersensvej#####"}},
+            {new String[]{"aalgade"}, new String[]{"Invalid address"}},
         });
     }
     
@@ -84,7 +93,6 @@ public class AddressMatcherTest {
 
     @Test
     public void testAll() {
-        Parser p = new Parser();
         for(int i = 0; i < actual.length ;i++){
             AddressMatcher am = new AddressMatcher(actual[i]);
             actual[i] = am.getOutput();
