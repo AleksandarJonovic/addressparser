@@ -34,12 +34,10 @@ public class AddressMatcher {
             br.close();
             Collections.sort(rawAddressList);
             Collections.sort(cleanAddressList);
-
+            
         } catch (Exception e) {
             e.printStackTrace();
         }
-//      Collections.sort(cleanAddressList, Collator.getInstance());
-//      Collections.sort(rawAddressList, Collator.getInstance());
     }
 
     /*
