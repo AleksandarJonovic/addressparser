@@ -56,6 +56,7 @@ public class Parser {
             while (matcher.find())                      /* 2 */
 
             {
+                System.out.println(parseMe);
                 // create a new string with the first matched find.
                 String matchedString = parseMe.substring(matcher.start(), matcher.end());
                 // remove nonwanted chars
@@ -74,6 +75,9 @@ public class Parser {
                  * remove the first appearence of the found string so that the
                  * regEx will not find it again.
                  */
+                parseMe += " ";
+                if (parseMe.substring(0,1).equals(","))
+                    parseMe = parseMe.replaceFirst(",", "");
                 parseMe = parseMe.replaceFirst(matchedString, "").trim();
                 // break out and go on to the next regEx
                 break;
