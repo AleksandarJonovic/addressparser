@@ -162,7 +162,6 @@ public class Parser {
 
             // find matches if any in the parseMe String
             while (matcher.find()) /* 2 */ {
-                System.out.println(parseMe);
                 // create a new string with the first matched find.
                 String matchedString = parseMe.substring(matcher.start(), matcher.end());
                 // remove nonwanted chars
@@ -182,7 +181,7 @@ public class Parser {
                 parseMe = parseMe.trim();
                 parseMe += " ";
                 while (parseMe.substring(0, 1).equals(",")) {
-                    parseMe = parseMe.replaceFirst(",", "");
+                    parseMe = parseMe.replaceFirst(",", "").trim()+ " ";
                 }
                 parseMe = parseMe.replaceFirst(matchedString, "").trim();
                 // break out and go on to the next regEx
