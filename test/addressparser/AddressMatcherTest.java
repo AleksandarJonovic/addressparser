@@ -84,11 +84,9 @@ public class AddressMatcherTest {
 
     @Test
     public void testAll() {
-
-        Addressparser ap = new Addressparser();
         Parser p = new Parser();
         for(String s : actual){
-            System.out.println(p.cleanString(ap.parseSingleAdress(s)));
+            System.out.println(p.cleanString(p.parseSingleAdress(s)));
             try {
                 s = p.checkAddressExist(s);
             } catch (InvalidInputException ex) {

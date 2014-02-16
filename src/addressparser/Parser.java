@@ -212,7 +212,6 @@ public class Parser {
         public String parseStreetAddress(String s){
                     s = cleanString(s);
             try {
-                Addressparser ap = new Addressparser();
                 String streetName = checkAddressExist(s);
                 // Remove the way the user has typed the address...
                 if (streetName != null) {
@@ -222,7 +221,7 @@ public class Parser {
                 }
                 // ... and replace it with our version + a ","
                 s = streetName + ", " + s;
-                System.out.println(ap.parseSingleAdress(s));
+                System.out.println(parseSingleAdress(s));
                 System.out.println("");
                 
                 return s;
@@ -233,5 +232,44 @@ public class Parser {
             }
             return s;
         }
+
+    /**
+     * Takes a String and then split it into blocks of information about an
+     * address and return a string with those blocks divided by an # char
+     *
+     * @param address a string which may contain information about an address.
+     * @return a string with address information splittet by an # char
+     */
+    public String parseSingleAdress(String address) {
+        Parser parser = new Parser();
+        String[] addressSplitted;
+        try {
+            addressSplitted = parser.parseThis(address);
+        } catch (InvalidInputException ex) {
+            return ex.getMessageString() + " - cause: " + ex.getCauseString();
+        }
+        String finalString = "";
+        for (int i = 0; i < addressSplitted.length; i++) {
+            if (addressSplitted[i] != null) {
+                if (i == 3) {
+                    if (addressSplitted[i].contains("st")) {
+                        finalString += "0";
+                    } else {
+                        Pattern pattern = Pattern.compile("\\d*", Pattern.MULTILINE);
+                        Matcher matcher = pattern.matcher(addressSplitted[i]);
+                        while (matcher.find()) {
+                            finalString += addressSplitted[i].substring(matcher.start(), matcher.end());
+                        }
+                    }
+                } else {
+                    finalString += addressSplitted[i];
+                }
+            }
+            if (i != addressSplitted.length - 1) {
+                finalString += "#";
+            }
+        }
+        return finalString;
+    }
 
 }
