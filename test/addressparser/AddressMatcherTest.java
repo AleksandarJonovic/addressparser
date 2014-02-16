@@ -7,22 +7,26 @@
 package addressparser;
 
 import ExceptionPackage.InvalidInputException;
-import java.io.ByteArrayInputStream;
 import java.io.FileNotFoundException;
-import java.util.Scanner;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.assertArrayEquals;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
 /**
  *
  * @author Christian
  */
+
+@RunWith(Parameterized.class)
 public class AddressMatcherTest {
     
     private static String[] input = new String[]{"Rued Langgards Vej 7, 2300 København S", 
@@ -57,6 +61,43 @@ public class AddressMatcherTest {
     public void tearDown() {
     }
     
+    @Parameterized.Parameters
+    public static Collection<Object[]> data() {
+        //Build and return Arrays as lists in format; String[] <Test Input>, String[] <Expected Output>.
+        return Arrays.asList(new Object[][]{
+            {new String[]{""}, new String[]{null}},
+            {new String[]{"Rued Langgaards Vej"}, new String[]{"ruedlanggaardsvej"}},
+            {new String[]{"Rued Langgaards Vej 7, 5. sal. København S"}, new String[]{"ruedlanggaardsvej"}},
+            {new String[]{"Rued Langgaards Vej 7 2300 København S"}, new String[]{"ruedlanggaardsvej"}},
+            {new String[]{"Rued Langgaards Vej 7 2300 København S"}, new String[]{"ruedlanggaardsvej"}},
+            {new String[]{"Rued Langgaards Vej 7A København S"}, new String[]{"ruedlanggaardsvej"}},
+            {new String[]{"Rued Langgaards Vej i København"}, new String[]{"ruedlanggaardsvej"}},
+        });
+    }
+    
+        private final String[] actual;
+    private final String[] expected;
+
+    public AddressMatcherTest(String[] actual, String[] expected) {
+        this.actual = actual;
+        this.expected = expected;
+    }
+
+    @Test
+    public void testAll() {
+            for (String s : actual){
+                try {
+                    AddressMatcher.checkAddressExist(s);
+                } catch (InvalidInputException ex) {
+                    Logger.getLogger(AddressMatcherTest.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            
+            //Check the output with the expected output.
+            assertArrayEquals(expected, actual);
+    }
+
+
    
     /**
      * Test of main method, of class AddressMatcher.
