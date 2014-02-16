@@ -9,10 +9,10 @@ import java.io.*;
  */
 public class AddressMatcher {
 
-    public AddressMatcher() {
+    String output;
+    public AddressMatcher(String input) {
         Parser p = new Parser();
         try {
-            String input = "Brøndby Nord Vej";
             System.out.println("Input: " + input);
             System.out.println("");
             String output = p.parseStreetAddress(input);
@@ -25,6 +25,12 @@ public class AddressMatcher {
         }
     }
 
+    public String getOutput() {
+        return output;
+    }
+    
+    
+
     /**
      * The active main method of the program. Waits for the user to input some
      * text and prints the address information in the correct format. If
@@ -34,6 +40,6 @@ public class AddressMatcher {
      * @throws InvalidInputException
      */
     public static void main(String[] args) {
-        AddressMatcher am = new AddressMatcher();
+        AddressMatcher am = new AddressMatcher("Brøndby Nord Vej");
     }
 }
