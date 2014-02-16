@@ -162,6 +162,7 @@ public class Parser {
 
             // find matches if any in the parseMe String
             while (matcher.find()) /* 2 */ {
+                System.out.println(parseMe);
                 // create a new string with the first matched find.
                 String matchedString = parseMe.substring(matcher.start(), matcher.end());
                 // remove nonwanted chars
@@ -193,17 +194,19 @@ public class Parser {
     }
 
     public String parseStreetAddress(String s) throws InvalidInputException {
-        s = cleanString(s);
-        String streetName = checkAddressExist(s);
+        String input = s.toLowerCase();
+        String cleanedInput = cleanString(s);
+        String streetName = checkAddressExist(cleanedInput);
+        String s3;
         // Remove the way the user has typed the address...
         if (streetName != null) {
             for (int i = 0; i < streetName.length(); i++) {
-                s = s.replaceFirst(streetName.substring(i, i + 1), "");
+                input = input.replaceFirst(streetName.substring(i, i + 1), "");
             }
         }
         // ... and replace it with our version + a ","
-        s = streetName + ", " + s;
-        return parseSingleAdress(s);
+        s3 = streetName + ", " + input;
+        return parseSingleAdress(s3);
     }
 
     /**
