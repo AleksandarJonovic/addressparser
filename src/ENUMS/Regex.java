@@ -7,13 +7,13 @@
 package ENUMS;
 
 /**
- *
+ * A enum class with the different regExes.
  * @author Alex
  */
 public enum Regex {
     
-    //STREETNAME("[\\sA-Øa-ø'-]{1,}"),
-    STREETNAME(".*,"),
+    //STREETNAME("[\\sA-Øa-ø'-]{1,}"), // the old regex for streetnames
+    STREETNAME("[^,]*"),
     STREETNUMBER("[1-9]\\d{0,2}"),
     STREETLETTER("([a-ø]|[A-Ø])?( |\\s)?"),
     FLOOR("\\d{1,2}[. -]*(sal| {2}|\\.)"),   

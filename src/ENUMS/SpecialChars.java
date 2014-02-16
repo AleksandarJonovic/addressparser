@@ -7,7 +7,7 @@
 package ENUMS;
 
 /**
- *
+ * A Enum package of regexes to clean strings with.
  * @author Alex
  */
 public enum SpecialChars {

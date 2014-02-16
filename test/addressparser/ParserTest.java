@@ -49,12 +49,12 @@ public class ParserTest {
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][]{
             {new String[]{""}, new String[]{null}},
-            {new String[]{"Rued Langgaards Vej"}, new String[]{"Rued Langgaards Vej", null, null, null, null, null}},
-            {new String[]{"Rued Langgaards Vej 7, 5. sal. København S"}, new String[]{"Rued Langgaards Vej", "7", null, "5 sal", null, "København S"}},
-            {new String[]{"Rued Langgaards Vej 7 2300 København S"}, new String[]{"Rued Langgaards Vej", "7", null, null, "2300", "København S"}},
-            {new String[]{"Rued Langgaards Vej 7 2300 København S"}, new String[]{"Rued Langgaards Vej", "7", null, null, "2300", "København S"}},
-            {new String[]{"Rued Langgaards Vej 7A København S"}, new String[]{"Rued Langgaards Vej", "7", "A", null, null, "København S"}},
-            {new String[]{"Rued Langgaards Vej i København"}, new String[]{"Rued Langgaards Vej", null, null, null, null, "København"}},
+            {new String[]{"Rued Langgaards Vej, "}, new String[]{"Rued Langgaards Vej", null, null, null, null, null}},
+            {new String[]{"Rued Langgaards Vej, 7, 5. sal. København S"}, new String[]{"Rued Langgaards Vej", "7", null, "5 sal", null, "København S"}},
+            {new String[]{"Rued Langgaards Vej, 7 2300 København S"}, new String[]{"Rued Langgaards Vej", "7", null, null, "2300", "København S"}},
+            {new String[]{"Rued Langgaards Vej, 7 2300 København S"}, new String[]{"Rued Langgaards Vej", "7", null, null, "2300", "København S"}},
+            {new String[]{"Rued Langgaards Vej, 7A København S"}, new String[]{"Rued Langgaards Vej", "7", "A", null, null, "København S"}},
+            {new String[]{"Rued Langgaards Vej, i København"}, new String[]{"Rued Langgaards Vej", null, null, null, null, "København"}},
         });
     }
 
