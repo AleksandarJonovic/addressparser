@@ -9,12 +9,21 @@ import java.io.*;
  */
 public class AddressMatcher {
 
-
-  
-    public AddressMatcher() throws FileNotFoundException {
-
+    public AddressMatcher() {
+        Parser p = new Parser();
+        try {
+            String input = "Brøndby Nord Vej";
+            System.out.println("Input: " + input);
+            System.out.println("");
+            String output = p.parseStreetAddress(input);
+            System.out.println("");
+            System.out.println("Output: " + output);
+            System.out.println("");
+        } catch (InvalidInputException ex) {
+            ex.printPossibleStreetName();
+            System.out.println("");
+        }
     }
-
 
     /**
      * The active main method of the program. Waits for the user to input some
@@ -24,8 +33,7 @@ public class AddressMatcher {
      * @param args
      * @throws InvalidInputException
      */
-    public static void main(String[] args) throws InvalidInputException {
-        Parser p = new Parser();
-        p.parseStreetAddress("Brøndby Nord Vej");
+    public static void main(String[] args) {
+        AddressMatcher am = new AddressMatcher();
     }
 }
