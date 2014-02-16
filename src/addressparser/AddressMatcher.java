@@ -41,6 +41,6 @@ public class AddressMatcher {
      * @throws InvalidInputException
      */
     public static void main(String[] args) {
-        AddressMatcher am = new AddressMatcher("Brøndby Nord Vej");
+        AddressMatcher am = new AddressMatcher("Rued Langgaards Vej, 7A, København S");
     }
 }
