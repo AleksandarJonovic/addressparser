@@ -127,7 +127,7 @@ public class AddressMatcher {
                 for (int k = indexHigh; k >= indexLow; k--) {
                     if (input.length() >= cleanAddressList.get(k).length()) {
                         if (cleanAddressList.get(k).equals(input.substring(0, cleanAddressList.get(k).length()))) {
-                            System.out.println("Best match: " + cleanAddressList.get(k));
+                            System.out.println("Best street name match: " + cleanAddressList.get(k));
                             return cleanAddressList.get(k);
                         }
                     }
