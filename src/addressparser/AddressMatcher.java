@@ -174,6 +174,7 @@ public class AddressMatcher {
         Addressparser ap = new Addressparser();
         String[] input;
         Scanner scanIn = new Scanner(System.in, "ISO-8859-1");
+        
 
         try {
             am = new AddressMatcher();
