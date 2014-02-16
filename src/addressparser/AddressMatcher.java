@@ -9,7 +9,7 @@ import java.io.*;
  */
 public class AddressMatcher {
 
-    String output;
+    private String output;
     public AddressMatcher(String input) {
         Parser p = new Parser();
         try {
@@ -41,6 +41,6 @@ public class AddressMatcher {
      * @throws InvalidInputException
      */
     public static void main(String[] args) {
-        AddressMatcher am = new AddressMatcher("Rued Langgaards Vej, 7A, København S");
+        AddressMatcher am = new AddressMatcher("Brøndby Nord Vej");
     }
 }
