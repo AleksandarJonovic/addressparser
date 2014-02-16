@@ -77,7 +77,7 @@ public class AddressMatcher {
      * @return
      * @throws InvalidInputException
      */
-    private static String checkAddressExist(String input) throws InvalidInputException {
+    public static String checkAddressExist(String input) throws InvalidInputException {
         int indexLow = 0;
         int indexHigh = cleanAddressList.size();
         // this loop goes widens the substring of the input so in the beginning
@@ -144,7 +144,7 @@ public class AddressMatcher {
      * @param input some String which needs to be cleaned
      * @return
      */
-    private static String cleanString(String input) {
+    public static String cleanString(String input) {
         String cleanString;
 
         String dirtyString = input;
