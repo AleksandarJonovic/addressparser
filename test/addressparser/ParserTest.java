@@ -47,14 +47,15 @@ public class ParserTest {
 
     @Parameters
     public static Collection<Object[]> data() {
+        //Build and return Arrays as lists in format; String[] <Expected output>, String[] <Expected Output>.
         return Arrays.asList(new Object[][]{
             {new String[]{""}, new String[]{null}},
-            {new String[]{"Rued Langgaards Vej, "}, new String[]{"Rued Langgaards Vej", null, null, null, null, null}},
-            {new String[]{"Rued Langgaards Vej, 7, 5. sal. København S"}, new String[]{"Rued Langgaards Vej", "7", null, "5 sal", null, "København S"}},
-            {new String[]{"Rued Langgaards Vej, 7 2300 København S"}, new String[]{"Rued Langgaards Vej", "7", null, null, "2300", "København S"}},
-            {new String[]{"Rued Langgaards Vej, 7 2300 København S"}, new String[]{"Rued Langgaards Vej", "7", null, null, "2300", "København S"}},
-            {new String[]{"Rued Langgaards Vej, 7A København S"}, new String[]{"Rued Langgaards Vej", "7", "A", null, null, "København S"}},
-            {new String[]{"Rued Langgaards Vej, i København"}, new String[]{"Rued Langgaards Vej", null, null, null, null, "København"}},
+            {new String[]{"Rued Langgaards Vej"}, new String[]{"Rued Langgaards Vej", null, null, null, null, null}},
+            {new String[]{"Rued Langgaards Vej 7, 5. sal. København S"}, new String[]{"Rued Langgaards Vej", "7", null, "5 sal", null, "København S"}},
+            {new String[]{"Rued Langgaards Vej 7 2300 København S"}, new String[]{"Rued Langgaards Vej", "7", null, null, "2300", "København S"}},
+            {new String[]{"Rued Langgaards Vej 7 2300 København S"}, new String[]{"Rued Langgaards Vej", "7", null, null, "2300", "København S"}},
+            {new String[]{"Rued Langgaards Vej 7A København S"}, new String[]{"Rued Langgaards Vej", "7", "A", null, null, "København S"}},
+            {new String[]{"Rued Langgaards Vej i København"}, new String[]{"Rued Langgaards Vej", null, null, null, null, "København"}},
         });
     }
 
@@ -72,7 +73,7 @@ public class ParserTest {
             Parser instance = new Parser();
             String[] testOutput = new String[5];
             for (String s : actual) {
-                //This is where the parser methid is invoked.
+                //This is where the parser method is invoked.
                 testOutput = instance.parseThis(s);
             }
             
@@ -83,10 +84,4 @@ public class ParserTest {
         }
     }
 
-    /**
-     * Test of parseThis method, of class Parser.
-     *
-     * @throws ExceptionPackage.InvalidInputException
-     */
-    
 }
