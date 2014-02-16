@@ -7,15 +7,50 @@ package addressparser;
 import ENUMS.Regex;
 import ENUMS.SpecialChars;
 import ExceptionPackage.InvalidInputException;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
 public class Parser {
+    private ArrayList<String> rawAddressList = new ArrayList<>();
+    private ArrayList<String> cleanAddressList = new ArrayList<>();
 
+      /**
+     * The constructor of the Parser. It loads in the road_names.txt
+     * file, and creates two arrays, a cleaned one and a raw one. The clean one
+     * is used for comparing with user-input the other one is used for output.
+     * Here we also sort the two collections.
+     *
+     * @throws FileNotFoundException throws it if there went something wrong
+     * with reading the streetnames file.
+     */
 
+    public Parser() {
+                try {
+            BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream("road_names.txt"), "LATIN1"));
+            StringBuilder sb = new StringBuilder();
+            String line = br.readLine();
+
+            while (line != null) {
+                rawAddressList.add(line);
+                cleanAddressList.add(cleanString(line));
+                line = br.readLine();
+            }
+            br.close();
+            Collections.sort(rawAddressList);
+            Collections.sort(cleanAddressList);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     /**
      * Takes the input, and character by character broaden the streetnames in
      * the streetname file, to match the input. If there are 5 or less elements
@@ -25,6 +60,7 @@ public class Parser {
      * @param input a string which has to be gone through to find an address.
      * @return
      * @throws InvalidInputException
+     * 
      */
     public String checkAddressExist(String input) throws InvalidInputException {
 
@@ -32,12 +68,12 @@ public class Parser {
             AddressMatcher am = new AddressMatcher();
 
         int indexLow = 0;
-        int indexHigh = am.cleanAddressList.size();
+        int indexHigh = cleanAddressList.size();
         for (int i = 0; i < input.length(); i++) {
             boolean firstAppereance = true;
             boolean lastAppereance = true;
             for (int j = indexLow; j < indexHigh; j++) {
-                String s3 = am.cleanAddressList.get(j);
+                String s3 = cleanAddressList.get(j);
                 if (s3.length() < i + 1) {
                     continue;
                 }
@@ -64,13 +100,13 @@ public class Parser {
             if (indexHigh - indexLow <= 5) {
                 InvalidInputException ex = new InvalidInputException();
                 for (int k = indexHigh; k >= indexLow; k--) {
-                    if (input.length() >= am.cleanAddressList.get(k).length()) {
-                        if (am.cleanAddressList.get(k).equals(input.substring(0, am.cleanAddressList.get(k).length()))) {
-                            System.out.println("Best street name match: " + am.cleanAddressList.get(k));
-                            return am.cleanAddressList.get(k);
+                    if (input.length() >= cleanAddressList.get(k).length()) {
+                        if (cleanAddressList.get(k).equals(input.substring(0, cleanAddressList.get(k).length()))) {
+                            System.out.println("Best street name match: " + cleanAddressList.get(k));
+                            return cleanAddressList.get(k);
                         }
                     }
-                    ex.addPossibleStreetName(am.cleanAddressList.get(k));
+                    ex.addPossibleStreetName(cleanAddressList.get(k));
                 }
                 throw ex;
             }
