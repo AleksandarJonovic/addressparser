@@ -20,6 +20,15 @@ public class AddressMatcher {
     private static ArrayList<String> rawAddressList = new ArrayList<>();
     private static ArrayList<String> cleanAddressList = new ArrayList<>();
 
+    /**
+     * The constructor of the AddressMatcher. It loads in the road_names.txt
+     * file, and creates two arrays, a cleaned one and a raw one. The clean one
+     * is used for comparing with user-input the other one is used for output.
+     * Here we also sort the two collections.
+     *
+     * @throws FileNotFoundException throws it if there went something wrong
+     * with reading the streetnames file.
+     */
     public AddressMatcher() throws FileNotFoundException {
         try {
             BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream("road_names.txt"), "LATIN1"));
@@ -40,6 +49,11 @@ public class AddressMatcher {
         }
     }
 
+    /**
+     * Not used atm as of 16-12-2014
+     *
+     * @param address the parsed addresses
+     */
     public static void matchStreet(String[] address) {
         long startTime = System.currentTimeMillis();
         String input = cleanString(address[0]);
@@ -54,17 +68,28 @@ public class AddressMatcher {
     }
 
     /**
-     * 
+     * Takes the input, and character by character broaden the streetnames in
+     * the streetname file, to match the input. If there are 5 or less elements
+     * that matches at any given point, then it tests if they are the wanted
+     * element.
+     *
      * @param input a string which has to be gone through to find an address.
      * @return
-     * @throws InvalidInputException 
+     * @throws InvalidInputException
      */
     private static String checkAddressExist(String input) throws InvalidInputException {
         int indexLow = 0;
         int indexHigh = cleanAddressList.size();
+        // this loop goes widens the substring of the input so in the beginning
+        // it is only the first substring.
         for (int i = 0; i < input.length(); i++) {
             boolean firstAppereance = true;
             boolean lastAppereance = true;
+
+            //   Here we search through the streetnames file, if their substring
+            //    matches the input substring of the same length then make a new
+            //    lowest index and a new highest index. This way the lowest and
+            //    highest index will at some point be close to eachother.
             for (int j = indexLow; j < indexHigh; j++) {
                 String s3 = cleanAddressList.get(j);
                 if (s3.length() < i + 1) {
@@ -72,8 +97,7 @@ public class AddressMatcher {
                 }
                 String s1 = s3.substring(0, i + 1);
                 String s2 = input.substring(0, i + 1);
-                //System.out.println(s1);
-                //System.out.println(s2);
+
                 if (s1.equals(s2) && firstAppereance == true) {
                     firstAppereance = false;
                     indexLow = j;
@@ -93,6 +117,11 @@ public class AddressMatcher {
             firstAppereance = true;
             lastAppereance = true;
 
+            //If the code was successful at finding 2 indexes close to
+            //eachother then we check through each of those results that are on
+            //those indexes. If any of the matches the substring of the input
+            //with that length then return it, otherwise throw an exception
+            //with those matches it did find
             if (indexHigh - indexLow <= 5) {
                 InvalidInputException ex = new InvalidInputException();
                 for (int k = indexHigh; k >= indexLow; k--) {
@@ -111,9 +140,9 @@ public class AddressMatcher {
     }
 
     /**
-     * 
+     *
      * @param input some String which needs to be cleaned
-     * @return 
+     * @return
      */
     private static String cleanString(String input) {
         String cleanString;
@@ -133,8 +162,8 @@ public class AddressMatcher {
 
     /**
      * The active main method of the program. Waits for the user to input some
-     * text and prints the address information in the correct format.
-     * If something went wrong, the exception information will be printed instead.
+     * text and prints the address information in the correct format. If
+     * something went wrong, the exception information will be printed instead.
      *
      * @param args
      * @throws InvalidInputException
@@ -156,10 +185,9 @@ public class AddressMatcher {
         while (true) {
             System.out.print("Enter address: ");
             String s = scanIn.nextLine();
-            
+
             //input = p.parseThis(s); // not used atm
             //matchStreet(input); // not used atm
-            
             System.out.println("");
 
             String s2 = cleanString(s);
