@@ -81,19 +81,4 @@ public class Addressparser {
         }
         return finalString;
     }
-
-    /**
-     * Print out the Strings contained in the addressesInput and
-     * addressesOutput, next to eachother so one can examine the results. Is not
-     * used anymore
-     *
-     * @param addressesInput the String imput the program has handled
-     * @param addressesOutput the string array the program has created.
-     */
-    private void print(String[] addressesInput, String[] addressesOutput) {
-        for (int i = 0; i < addressesInput.length; i++) /* 6 */ {
-            System.out.println("Input:  " + addressesInput[i] + "\nOutput: " + addressesOutput[i]);
-            System.out.println("- - - - ");
-        }
-    }
 }

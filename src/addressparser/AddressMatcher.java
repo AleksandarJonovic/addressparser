@@ -3,8 +3,6 @@ package addressparser;
 import ExceptionPackage.InvalidInputException;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Collections;
 
 /**
  * Created by Christian on 12/02/14.

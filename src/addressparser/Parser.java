@@ -221,8 +221,8 @@ public class Parser {
                     }
                 }
                 // ... and replace it with our version + a ","
-                String s3 = streetName + ", " + s;
-                System.out.println(ap.parseSingleAdress(s3));
+                s = streetName + ", " + s;
+                System.out.println(ap.parseSingleAdress(s));
                 System.out.println("");
                 
                 return s;
