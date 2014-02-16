@@ -66,10 +66,10 @@ public class AddressMatcherTest {
         return Arrays.asList(new Object[][]{
             {new String[]{"Brøndby Nord Vej"}, new String[]{"brøndbynordvej#####"}},
             {new String[]{"Rued Langgaards Vej"}, new String[]{"ruedlanggaardsvej#####"}},
-            {new String[]{"Rued Langgaards Vej, 7, 5. sal København S"}, new String[]{"ruedlanggaardsvej#7##5##københavns"}},
-            {new String[]{"Rued Langgaards Vej, 7, 2300 København S"}, new String[]{"ruedlanggaardsvej#7###2300#københavns"}},
-            {new String[]{"Rued Langgaards Vej, 7, 2300 København S"}, new String[]{"ruedlanggaardsvej#7###2300#københavns"}},
-            {new String[]{"Rued Langgaards Vej, 7A, København S"}, new String[]{"ruedlanggaardsvej#7#a###københavns"}},
+            {new String[]{"Rued Langgaards Vej, 7, 5. sal København S"}, new String[]{"ruedlanggaardsvej#7##5##københavn s"}},
+            {new String[]{"Rued Langgaards Vej, 7, 2300 København S"}, new String[]{"ruedlanggaardsvej#7###2300#københavn s"}},
+            {new String[]{"Rued Langgaards Vej, 7, 2300 København S"}, new String[]{"ruedlanggaardsvej#7###2300#københavn s"}},
+            {new String[]{"Rued Langgaards Vej, 7A, København S"}, new String[]{"ruedlanggaardsvej#7#a###københavn s"}},
             {new String[]{"Rued Langgaards Vej, i København"}, new String[]{"ruedlanggaardsvej#####københavn"}},
         });
     }
@@ -86,16 +86,19 @@ public class AddressMatcherTest {
     public void testAll() {
         Parser p = new Parser();
         for(int i = 0; i < actual.length ;i++){
+            AddressMatcher am = new AddressMatcher(actual[i]);
+            actual[i] = am.getOutput();
+            /*
             try {
                 System.out.println(p.cleanString(p.parseStreetAddress(actual[i])));
                 try {
-                    actual[i] = p.cleanString(p.parseStreetAddress(actual[i]));
                 } catch (InvalidInputException ex) {
                     Logger.getLogger(AddressMatcherTest.class.getName()).log(Level.SEVERE, null, ex);
                 }
             } catch (InvalidInputException ex) {
                 Logger.getLogger(AddressMatcherTest.class.getName()).log(Level.SEVERE, null, ex);
             }
+            */
         }
         assertArrayEquals(expected, actual);
     }
