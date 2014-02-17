@@ -17,7 +17,7 @@ import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
 public class Parser {
-
+    public static final Parser INSTANCE = new Parser();
     private ArrayList<String> rawAddressList = new ArrayList<>();
     private ArrayList<String> cleanAddressList = new ArrayList<>();
 
@@ -30,7 +30,7 @@ public class Parser {
      * @throws FileNotFoundException throws it if there went something wrong
      * with reading the streetnames file.
      */
-    public Parser() {
+    private Parser() {
         try {
             BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream("road_names.txt"), "LATIN1"));
             StringBuilder sb = new StringBuilder();
@@ -216,10 +216,9 @@ public class Parser {
      * @return a string with address information splittet by an # char
      */
     public String parseSingleAdress(String address) {
-        Parser parser = new Parser();
         String[] addressSplitted;
         try {
-            addressSplitted = parser.parseThis(address);
+            addressSplitted = parseThis(address);
         } catch (InvalidInputException ex) {
             return ex.getMessageString() + " - cause: " + ex.getCauseString();
         }

@@ -6,12 +6,8 @@
 
 package addressparser;
 
-import ExceptionPackage.InvalidInputException;
-import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.assertArrayEquals;
@@ -29,24 +25,10 @@ import org.junit.runners.Parameterized;
 @RunWith(Parameterized.class)
 
 public class AddressMatcherTest {
-/*    
-    private static String[] input = new String[]{"Rued Langgards Vej 7, 2300 København S", 
-                             "Rued Langgaards Vej 7, 5. sal. København S",
-                             "Rued Langgaards Vej 7A København S",
-                             "Rued Langgaards Vej i København",
-                             "2300 København S, Rued Langgaards Vej 7",
-                             "København S 2300, Rued Langgaards Vej 7",
-                             "10. Juli Vej, 6070 Christiansfeld",
-                             "Haveforeningen af 10. maj 1918 7, 8260 Viby J",
-                             "Ved Mønten 10 st 4, 2300 København S",
-                             "H C Andersens Vej",
-                             "Aalgade"
-                             };
-    */
-    
+private static AddressMatcher am;
     @BeforeClass
     public static void setUpClass() {
-        Parser p = new Parser();
+    am = new AddressMatcher();
     }
     
     @AfterClass
@@ -124,14 +106,13 @@ public class AddressMatcherTest {
             {new String[]{"Rued Langgaards Vej 9e 1-sal"}, new String[]{ "ruedlanggaardsvej#9#e#1##"}},
             // next is test 45
             // Postal code tests
-
             {new String[]{"Rued Langgaards Vej 9e 1-sal 1991"}, new String[]{ "ruedlanggaardsvej#9#e#1#1991#"}},
             // next is test 46
             // City tests
             {new String[]{"Rued Langgaards Vej 9e 1-sal 2300 København"}, new String[]{ "ruedlanggaardsvej#9#e#1#2300#københavn"}},
             {new String[]{"Rued Langgaards Vej 9e 1-sal 2300 København S"}, new String[]{ "ruedlanggaardsvej#9#e#1#2300#københavn s"}},
             
-            {new String[]{}, new String[]{}}, // placeholder for new tests
+            //{new String[]{}, new String[]{}}, // placeholder for new tests
         });
     }
     
@@ -145,66 +126,9 @@ public class AddressMatcherTest {
 
     @Test
     public void testAll() {
-        for(int i = 0; i < actual.length ;i++){
-            AddressMatcher am = new AddressMatcher(actual[i]);
-            actual[i] = am.getOutput();
-            /*
-            try {
-                System.out.println(p.cleanString(p.parseStreetAddress(actual[i])));
-                try {
-                } catch (InvalidInputException ex) {
-                    Logger.getLogger(AddressMatcherTest.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            } catch (InvalidInputException ex) {
-                Logger.getLogger(AddressMatcherTest.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            */
-        }
+            am.test(actual[0]);
+            actual[0] = am.getOutput();
+        
         assertArrayEquals(expected, actual);
     }
-
-
-   
-    /**
-     * Test of main method, of class AddressMatcher.
-     * @throws java.lang.Exception
-     */
-    /*
-    @Test
-    public void testMain() throws Exception {
-        AddressMatcher am;
-        Addressparser ap = new Addressparser();
-        try {
-            am = new AddressMatcher();
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(AddressMatcher.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        // wait for the user to input text, handle it and wait for the next.
-        for (String s : input) {
-            
-            System.out.print("Input address: " + s);
-            System.out.println("");
-
-            String s2 = AddressMatcher.cleanString(s);
-            s = s.toLowerCase();
-            try {
-                String streetName = AddressMatcher.checkAddressExist(s2);
-                // Remove the way the user has typed the address...
-                if (streetName != null) {
-                    for (int i = 0; i < streetName.length(); i++) {
-                        s = s.replaceFirst(streetName.substring(i, i + 1), "");
-                    }
-                }
-                // ... and replace it with our version + a ","
-                String s3 = streetName + ", " + s;
-                System.out.println(ap.parseSingleAdress(s3));
-                System.out.println("");
-
-            } catch (InvalidInputException ex) {
-                // if no other street names was found it will print the cause.
-                ex.printPossibleStreetName();
-                System.out.println("");
-            }
-        }
-    }*/
 }

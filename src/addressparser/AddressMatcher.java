@@ -2,16 +2,22 @@ package addressparser;
 
 import ExceptionPackage.InvalidInputException;
 
-import java.io.*;
 
 /**
  * Created by Christian on 12/02/14.
  */
 public class AddressMatcher {
-
+    private Parser p = Parser.INSTANCE;
     private String output;
-    public AddressMatcher(String input) {
-        Parser p = new Parser();
+    public AddressMatcher() {
+
+    }
+
+    public String getOutput() {
+        return output;
+    }
+    
+    public void test(String input){
         try {
             System.out.println("Input: " + input);
             System.out.println("");
@@ -25,10 +31,6 @@ public class AddressMatcher {
             System.out.println("");
         }
     }
-
-    public String getOutput() {
-        return output;
-    }
     
     
 
@@ -41,6 +43,7 @@ public class AddressMatcher {
      * @throws InvalidInputException
      */
     public static void main(String[] args) {
-        AddressMatcher am = new AddressMatcher("Rued Langgaards Vej 9 københavn s");
+        AddressMatcher am = new AddressMatcher();
+        am.test("Rued Langgaards Vej 9 københavn s");
     }
 }

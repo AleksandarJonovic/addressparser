@@ -70,11 +70,11 @@ public class ParserTest {
     @Test
     public void testAll() {
         try {
-            Parser instance = new Parser();
+            Parser p = Parser.INSTANCE;
             String[] testOutput = new String[5];
             for (String s : actual) {
                 //This is where the parser method is invoked.
-                testOutput = instance.parseThis(s);
+                testOutput = p.parseThis(s);
             }
             
             //Check the output with the expected output.
