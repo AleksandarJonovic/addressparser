@@ -156,7 +156,7 @@ public class Parser {
             Pattern pattern = Pattern.compile(Regex.values()[i].getRegex(), Pattern.MULTILINE);
 
             // replace " i " with a " , " for the regEx to divide the different blocks.
-            parseMe = parseMe.replace(" i ", " , ").trim();
+            parseMe = parseMe.replace(" i ", " , ").trim()+" ";
 
             Matcher matcher = pattern.matcher(parseMe);
 
