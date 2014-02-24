@@ -14,7 +14,7 @@ public enum Regex {
     
     //STREETNAME("[\\sA-Øa-ø'-]{1,}"), // the old regex for streetnames
     STREETNAME("[^,]*"),
-    STREETNUMBER("[1-9]\\d{0,2}"),
+    STREETNUMBER(" [1-9]\\d{0,2}(?=\\D)"),
     STREETLETTER("^([a-ø]|[A-Ø])?(\\s|(?=,))"),//("([a-ø]|[A-Ø]){0,1}(?<=(e|s)) "),//("([a-ø]|[A-Ø])?( |\\s)?"),
     FLOOR("(\\d{1,2}[. -]*(sal| {2}|\\.)|(stuen |st |st. ))"),//("\\d{1,2}[. -]*(sal| {2}|\\.)"),   
     ZIPCODE("\\b[0-9]{4}\\b"),
