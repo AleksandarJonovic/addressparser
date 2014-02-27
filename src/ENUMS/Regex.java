@@ -13,6 +13,7 @@ package ENUMS;
 public enum Regex {
     
     //STREETNAME("[\\sA-Øa-ø'-]{1,}"), // the old regex for streetnames
+    //test2
     STREETNAME("[^,]*"),
     STREETNUMBER(" [1-9]\\d{0,2}(?=\\D)"),
     STREETLETTER("^([a-ø]|[A-Ø])?(\\s|(?=,))"),//("([a-ø]|[A-Ø]){0,1}(?<=(e|s)) "),//("([a-ø]|[A-Ø])?( |\\s)?"),
