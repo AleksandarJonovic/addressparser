@@ -20,6 +20,7 @@ public enum SpecialChars {
     APOSTROPHE("'"),
     APOSTROPHETWO("´");
     //DIGITS("\\d");
+    // test
 
     
  
